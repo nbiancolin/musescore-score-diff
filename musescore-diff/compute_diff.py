@@ -5,62 +5,67 @@ import os
 import shutil
 from enum import Enum
 
-import copy
-
-TEMP_DIR 
+from copy import deepcopy
 
 
 
-def create_diff_score(input_score: str, output_score: str):
-    """
-    Create `diff-score`, the score where the diff calculation will take place
+def merge_musescore_files(file1_path, file2_path, output_path):
+    # Parse both files
+    tree1 = ET.parse(file1_path)
+    tree2 = ET.parse(file2_path)
 
-    Copy score from score1 into diffscore, then create new staves in diffscore
-    """
+    root1 = tree1.getroot()
+    root2 = tree2.getroot()
 
-    def get_part_name_from_staff_id(score: ET.Element, staff_id: int): # Returns tuple of dict of (int, ET.Element)
-        for part in score.findall("Part"):
-            if part.find("Staff").attrib["id"] == staff_id:
-                assert part.find("trackName")
-                return part.find("trackName").text
-        return "N/A"
+    # Locate the <Score> element in each
+    score1 = root1.find("Score")
+    score2 = root2.find("Score")
 
+    if score1 is None or score2 is None:
+        raise ValueError("Both files must contain a <Score> element.")
 
-    parser = ET.XMLParser()
-    score1_tree = ET.parse(input_score, parser)
-    score1_root = score1_tree.getroot()
-    score1 = score1_root.find("Score")
+    # Collect all Staff IDs from score1
+    existing_staff_ids = set()
+    for staff in score1.findall(".//Staff"):
+        existing_staff_ids.add(staff.attrib.get("id"))
 
-    parser2 = ET.XMLParser()
-    score2_tree = ET.parse(input_score, parser2)
-    score2_root = score2_tree.getroot()
-    score2 = score2_root.find("Score")
+    # Map old staff IDs from file2 to new IDs if needed
+    staff_id_map = {}
+    for staff in score2.findall(".//Staff"):
+        sid = staff.attrib.get("id")
+        if sid in existing_staff_ids:
+            # Keep same ID for matching staff
+            staff_id_map[sid] = sid
+        else:
+            # Make a new ID with "-1" suffix
+            new_id = f"{sid}-1"
+            staff_id_map[sid] = new_id
 
-    diff_score_tree = copy.deepcopy(score1_tree)
-    diff_score_root = diff_score_tree.getroot()
-    diff_score = diff_score_root.find("Score")
+    # Merge <Part> elements from file2
+    for part in score2.findall("./Part"):
+        # Clone the part so we don't mess with tree2
+        part_copy = deepcopy(part)
+        has_new_staff = False
 
-    score1_staves = {}
-    for staff in score1.findall("Staff"):
-        score1_staves[staff.attrib["id"]] = staff
+        # Update staff IDs in this part
+        for staff in part_copy.findall("Staff"):
+            old_id = staff.attrib.get("id")
+            if old_id in staff_id_map:
+                staff.attrib["id"] = staff_id_map[old_id]
+                if staff_id_map[old_id] != old_id:
+                    has_new_staff = True
 
-    score2_staves = {}
-    for staff in score2.findall("Staff"):
-        score2_staves[staff.attrib["id"]] = staff
+        if has_new_staff:
+            # Append to score1
+            score1.append(part_copy)
 
-    assert score2
-    assert score1
-    #TODO: use part names instead of IDs, bc if instruments are added or removed, the IDs change
-    for staff in score2.findall("Staff"):
-        staff.attrib["id"] = f"{staff.attrib["id"]}-1"
-        diff_score.append(staff)
-    
-    return {"diff_score_tree": diff_score_tree, "score1_staves": score1_staves, "score2_staves": score2_staves}
-        
+    # Merge top-level <Staff> blocks outside of <Part>
+    for staff in score2.findall("./Staff"):
+        old_id = staff.attrib.get("id")
+        if old_id in staff_id_map and staff_id_map[old_id] != old_id:
+            staff_copy = deepcopy(staff)
+            staff_copy.attrib["id"] = staff_id_map[old_id]
+            score1.append(staff_copy)
 
-
-
-def process_diff(diff_score_tree, score1_staves, score2_staves):
-    """
-    go through pair of staves at a time
-    """
+    # Save merged file
+    tree1.write(output_path, encoding="UTF-8", xml_declaration=True)
