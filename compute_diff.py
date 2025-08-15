@@ -8,6 +8,7 @@ from pathlib import Path
 
 from copy import deepcopy
 
+
 def merge_musescore_files(file1_path, file2_path, output_path):
     """
     Merge two MuseScore (MSCX) files into one Score with:
@@ -28,7 +29,11 @@ def merge_musescore_files(file1_path, file2_path, output_path):
         raise ValueError("Both files must contain a <Score> element.")
 
     # Find highest existing ID in score1
-    file1_ids = [int(s.get("id")) for s in score1.findall("./Staff") if s.get("id") and s.get("id").isdigit()]
+    file1_ids = [
+        int(s.get("id"))
+        for s in score1.findall("./Staff")
+        if s.get("id") and s.get("id").isdigit()
+    ]
     max_id_file1 = max(file1_ids) if file1_ids else 0
 
     # Build staff ID remapping for score2
@@ -118,10 +123,113 @@ def merge_musescore_files(file1_path, file2_path, output_path):
     tree1.write(output_path, encoding="UTF-8", xml_declaration=True)
 
 
-if __name__ == "__main__":
-    fixtures_dir = Path(__file__) / "tests/fixtures"
-    file1_path = fixtures_dir / "Test-Score/Test-Score.mscx"
-    file2_path = fixtures_dir / "Test-Score-2/Test-Score-2.mscx"
-    output_path = Path(__file__) / "tests/sample-output/Test-Score/Test-Score.mscx"
+def new_merge_musescore_files(f1_path, f2_path, output_path):
+    """
+    read in f1 and f2, create diff_score that is union of both scores
 
-    merge_musescore_files(file1_path, file2_path, output_path)
+    make list of all parts in f1
+    and all staves in f1
+        Note that their IDs line up!
+
+    make diff_score a deep_copy of score 1
+
+    then, copy over all parts and scores from staff 2 into diff_score
+    create list union_part_list and union_staff_list
+    when adding a part to the part list:
+        - simultaneously add the staff to the staff list
+        - Need to insert it in the correct position
+            - so, if the staff name exists in the list, name staff "<name>-1"
+            - set all IDs by their position in the list afterwards,
+
+    then, once lists are creatd
+    overwrite all parts in diff_score with the parts (in order) from part_list
+    and overwrite all staves in diff_score with the scores (in order) from score_list
+    """
+    tree1 = ET.parse(file1_path)
+    tree2 = ET.parse(file2_path)
+
+    root1 = tree1.getroot()
+    root2 = tree2.getroot()
+
+    score1 = root1.find("Score")
+    score2 = root2.find("Score")
+    if score1 is None or score2 is None:
+        raise ValueError("Both files must contain a <Score> element.")
+
+    union_part_list = [part for part in score1.findall("Part")]
+    part_names = [part.find("trackName").text for part in score1.findall("Part")]
+    union_staff_list = [staff for staff in score1.findall("Staff")]
+
+    for part, staff in zip(score2.findall("Part"), score2.findall("Staff")):
+        assert part.attrib["id"] == staff.attrib["id"], (
+            "ERROR: Somehow part and score IDs got out of sync"
+        )
+        staff_name = part.find("trackName")
+        assert staff_name
+        try:
+            index = part_names.index(staff_name)
+        except ValueError:
+            # append to end of list
+            union_part_list.append(part)
+            part_names.append(staff_name)
+            union_staff_list.append(staff)
+            continue
+
+        union_part_list.insert(index +1, deepcopy(part))
+        part_names.insert(index +1, deepcopy(part.find("trackName")))
+        union_staff_list.insert(index, deepcopy(staff))
+
+    diff_score_tree = deepcopy(tree1)
+
+    # remove all parts, and add back all parts from union_part_list (update IDs as they are inserted)
+
+    diff_root = diff_score_tree.getroot()
+    diff_score = diff_root.find("Score")
+
+    list_score = list(diff_score)
+    part_first_index = -1
+    staff_first_index = -1
+    parts_to_delete = []
+    for i in range(len(list_score)):
+        elem = list_score[i]
+        if elem.tag == "Part":
+            if part_first_index == -1:
+                part_first_index = i
+            parts_to_delete.append(elem)
+        if elem.tag == "Staff":
+            if staff_first_index == -1:
+                staff_first_index = i
+            diff_score.remove(elem)
+        
+    assert part_first_index != -1, "Could not find any parts in diff-score..."
+    assert staff_first_index != -1, "Could not find any staves in diff-score..."
+
+    num_staves = len(union_staff_list)
+    num_parts = len(union_part_list)
+    assert num_staves == num_parts
+
+    # all staves removed, add back new staves 
+    for staff in reversed(union_staff_list):
+        diff_score.insert(staff_first_index, staff)
+
+    #remove parts:
+    for part in parts_to_delete:
+        diff_score.remove(part)
+
+    
+    for part in reversed(union_part_list):
+        diff_score.insert(part_first_index, part)
+
+    diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
+
+
+
+
+if __name__ == "__main__":
+    file1_path = "tests\\fixtures\\Test-Score\\Test-Score.mscx"
+    file2_path = "tests\\fixtures\\Test-Score-2\\Test-Score-2.mscx"
+    output_path = "tests\\sample-output\\Test-Score\\Test-Score.mscx"
+
+    new_merge_musescore_files(file1_path, file2_path, output_path)
+
+    print("Musescore files merged!")
