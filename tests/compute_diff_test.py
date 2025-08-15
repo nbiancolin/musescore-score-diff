@@ -3,40 +3,44 @@ from pathlib import Path
 import tempfile
 from compute_diff import merge_musescore_files
 
-def test_merge_adds_new_staves_with_suffix():
-    fixtures_dir = Path(__file__).parent / "fixtures"
-    file1_path = fixtures_dir / "Test-Score/Test-Score.mscx"
-    file2_path = fixtures_dir / "Test-Score-2/Test-Score-2.mscx"
+def _count_top_level_parts_and_staves(score_elem):
+    parts = score_elem.findall("./Part")
+    staves = score_elem.findall("./Staff")
+    return len(parts), len(staves)
 
-    with tempfile.TemporaryDirectory() as tmpdir:
-        output_path = Path(tmpdir) / "merged.mscx"
+def test_merge_doubles_parts_and_staves_with_suffix():
+    fixtures = Path(__file__).parent / "fixtures"
+    f1 = fixtures / "Test-Score/Test-Score.mscx"
+    f2 = fixtures / "Test-Score-2/Test-Score-2.mscx"
 
-        # Merge files
-        merge_musescore_files(file1_path, file2_path, output_path)
+    # Parse originals to know baseline counts
+    score1 = ET.parse(f1).getroot().find("Score")
+    score2 = ET.parse(f2).getroot().find("Score")
+    p1, s1 = _count_top_level_parts_and_staves(score1)
+    p2, s2 = _count_top_level_parts_and_staves(score2)
 
-        # Parse merged XML
-        tree = ET.parse(output_path)
-        score = tree.getroot().find("Score")
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "merged.mscx"
+        merge_musescore_files(f1, f2, out)
 
-        # Collect staff IDs
-        staff_ids = [staff.attrib["id"] for staff in score.findall(".//Staff")]
+        merged = ET.parse(out).getroot().find("Score")
+        pm, sm = _count_top_level_parts_and_staves(merged)
 
-        # ✅ 1. All original staves from file1 are still present
-        file1_staff_ids = {staff.attrib["id"] for staff in ET.parse(file1_path).getroot().find("Score").findall(".//Staff")}
-        for sid in file1_staff_ids:
-            assert sid in staff_ids, f"Missing original staff {sid}"
+        # Parts and staves should be the sum (we append all of file2)
+        assert pm == p1 + p2, f"Expected {p1+p2} parts, got {pm}"
+        assert sm == s1 + s2, f"Expected {s1+s2} staves, got {sm}"
 
-        # ✅ 2. New staves from file2 have "-1" suffix
-        file2_staff_ids = {staff.attrib["id"] for staff in ET.parse(file2_path).getroot().find("Score").findall(".//Staff")}
-        new_staves = file2_staff_ids - file1_staff_ids
-        for sid in new_staves:
-            suffixed = f"{sid}-1"
-            assert suffixed in staff_ids, f"Expected new staff ID {suffixed} in merged file"
+        # All file2 staff ids should appear with "-1" suffix in merged
+        f2_staff_ids = {s.get("id") for s in score2.findall("./Staff")}
+        merged_staff_ids = {s.get("id") for s in merged.findall("./Staff")}
+        for sid in f2_staff_ids:
+            assert f"{sid}-1" in merged_staff_ids, f"Missing suffixed staff {sid}-1"
 
-        # ✅ 3. Staff IDs inside <Part> match top-level <Staff> IDs
-        top_level_ids = {staff.attrib["id"] for staff in score.findall("./Staff")}
-        part_staff_ids = {staff.attrib["id"] for staff in score.findall("./Part/Staff")}
-        assert part_staff_ids.issubset(top_level_ids), "Part staff IDs don't match top-level staff IDs"
+        # Part ids from file2 should also be present with "-1"
+        f2_part_ids = {p.get("id") for p in score2.findall("./Part")}
+        merged_part_ids = {p.get("id") for p in merged.findall("./Part")}
+        for pid in f2_part_ids:
+            assert f"{pid}-1" in merged_part_ids, f"Missing suffixed part {pid}-1"
 
 def test_export_file_for_visual_inspection():
     fixtures_dir = Path(__file__).parent / "fixtures"

@@ -10,62 +10,59 @@ from copy import deepcopy
 
 
 def merge_musescore_files(file1_path, file2_path, output_path):
-    # Parse both files
+    """
+    Merge two MuseScore (MSCX) files by appending a suffixed copy of file2's
+    parts/staves into file1.
+
+    - All <Part id="..."> from file2 become "<old>-1".
+    - All <Staff id="..."> (both in <Part> and top-level <Staff>) from file2 become "<old>-1".
+    - Top-level <Staff> blocks from file2 are appended after file1's top-level <Staff>s.
+
+    Note: This keeps eids as-is. If you need to avoid potential duplicate <eid> collisions,
+    strip them in the deepcopy before appending.
+    """
     tree1 = ET.parse(file1_path)
     tree2 = ET.parse(file2_path)
 
     root1 = tree1.getroot()
     root2 = tree2.getroot()
 
-    # Locate the <Score> element in each
     score1 = root1.find("Score")
     score2 = root2.find("Score")
-
     if score1 is None or score2 is None:
         raise ValueError("Both files must contain a <Score> element.")
 
-    # Collect all Staff IDs from score1
-    existing_staff_ids = set()
-    for staff in score1.findall(".//Staff"):
-        existing_staff_ids.add(staff.attrib.get("id"))
-
-    # Map old staff IDs from file2 to new IDs if needed
+    # Build a direct map for file2 staff ids -> suffixed ids
     staff_id_map = {}
     for staff in score2.findall(".//Staff"):
-        sid = staff.attrib.get("id")
-        if sid in existing_staff_ids:
-            # Keep same ID for matching staff
-            staff_id_map[sid] = sid
-        else:
-            # Make a new ID with "-1" suffix
-            new_id = f"{sid}-1"
-            staff_id_map[sid] = new_id
+        sid = staff.get("id")
+        if sid:
+            staff_id_map[sid] = f"{sid}-1"
 
-    # Merge <Part> elements from file2
+    # ---- Append Parts from file2 (always), remapping Part id and child Staff ids
     for part in score2.findall("./Part"):
-        # Clone the part so we don't mess with tree2
         part_copy = deepcopy(part)
-        has_new_staff = False
 
-        # Update staff IDs in this part
-        for staff in part_copy.findall("Staff"):
-            old_id = staff.attrib.get("id")
-            if old_id in staff_id_map:
-                staff.attrib["id"] = staff_id_map[old_id]
-                if staff_id_map[old_id] != old_id:
-                    has_new_staff = True
+        # Remap the Part's own id (to avoid Part id collisions)
+        old_part_id = part_copy.get("id")
+        if old_part_id:
+            part_copy.set("id", f"{old_part_id}-1")
 
-        if has_new_staff:
-            # Append to score1
-            score1.append(part_copy)
+        # Remap <Staff id="..."> within the part
+        for st in part_copy.findall("./Staff"):
+            old_sid = st.get("id")
+            if old_sid in staff_id_map:
+                st.set("id", staff_id_map[old_sid])
 
-    # Merge top-level <Staff> blocks outside of <Part>
+        score1.append(part_copy)
+
+    # ---- Append top-level <Staff> blocks from file2, remapping ids
     for staff in score2.findall("./Staff"):
-        old_id = staff.attrib.get("id")
-        if old_id in staff_id_map and staff_id_map[old_id] != old_id:
-            staff_copy = deepcopy(staff)
-            staff_copy.attrib["id"] = staff_id_map[old_id]
-            score1.append(staff_copy)
+        old_sid = staff.get("id")
+        staff_copy = deepcopy(staff)
+        if old_sid:
+            staff_copy.set("id", staff_id_map.get(old_sid, f"{old_sid}-1"))
+        score1.append(staff_copy)
 
-    # Save merged file
+    # Write result
     tree1.write(output_path, encoding="UTF-8", xml_declaration=True)
