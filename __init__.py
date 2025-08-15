@@ -3,4 +3,5 @@ def diff(
     score2_path: str,
     output_location: str = ".",
 
-)
+):
+    pass
