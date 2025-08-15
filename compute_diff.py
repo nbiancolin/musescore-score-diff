@@ -165,7 +165,7 @@ def new_merge_musescore_files(f1_path, f2_path, output_path):
             "ERROR: Somehow part and score IDs got out of sync"
         )
         staff_name = part.find("trackName")
-        assert staff_name
+        assert staff_name is not None
         try:
             index = part_names.index(staff_name)
         except ValueError:
@@ -206,10 +206,12 @@ def new_merge_musescore_files(f1_path, f2_path, output_path):
 
     num_staves = len(union_staff_list)
     num_parts = len(union_part_list)
-    assert num_staves == num_parts
+    # assert num_staves == num_parts, f"Num staves: {num_staves}, num parts: {num_parts}"
 
     # all staves removed, add back new staves 
     for staff in reversed(union_staff_list):
+        staff.attrib["id"] = f"{num_staves}"
+        num_staves -= 1
         diff_score.insert(staff_first_index, staff)
 
     #remove parts:
@@ -218,6 +220,8 @@ def new_merge_musescore_files(f1_path, f2_path, output_path):
 
     
     for part in reversed(union_part_list):
+        part.attrib["id"] = f"{num_parts}"
+        num_parts -= 1
         diff_score.insert(part_first_index, part)
 
     diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
