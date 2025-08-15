@@ -206,7 +206,8 @@ def new_merge_musescore_files(f1_path, f2_path, output_path):
 
     num_staves = len(union_staff_list)
     num_parts = len(union_part_list)
-    # assert num_staves == num_parts, f"Num staves: {num_staves}, num parts: {num_parts}"
+    assert num_staves == num_parts, f"Num staves: {num_staves}, num parts: {num_parts}\n {union_staff_list}\n{union_part_list}"
+    #Why are there 11 staves? thats an odd umber ??
 
     # all staves removed, add back new staves 
     for staff in reversed(union_staff_list):
