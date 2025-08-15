@@ -60,7 +60,7 @@ def create_diff_score(input_score: str, output_score: str):
 
 
 
-def process_diff(diff_score_tree):
+def process_diff(diff_score_tree, score1_staves, score2_staves):
     """
-    Grab staves
+    go through pair of staves at a time
     """
