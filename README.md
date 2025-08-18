@@ -25,7 +25,45 @@ then, for each staff pair (`<staff>` and `<staff>-1`):
 
 ### steps for coloring notes / rests in musescore
 
-add tag: `<color r="242" g="102" b="34" a="255"/>`
+add tag: `<color r="242" g="102" b="34" a="255"/>` to note
+
+### Steps for highlighting measures:
+
+Add tag to top ov voice (start of measures to be highlighted):
+```
+<Spanner type="TextLine">
+  <TextLine>
+    <eid>icWAADvE7ZE_UNlVmVRZvkP</eid>
+    <linkedMain/>
+    <diagonal>0</diagonal>
+    <lineWidth>5</lineWidth>
+    <color r="242" g="102" b="34" a="100"/>
+    <Segment>
+      <subtype>0</subtype>
+      <offset x="0" y="2"/>
+      <off2 x="0" y="0"/>
+      <minDistance>-999</minDistance>
+      <eid>nblchKlbnaD_7SJXnVEKpAF</eid>
+      </Segment>
+    </TextLine>
+  <next>
+    <location>
+      <measures>1</measures>
+      </location>
+    </next>
+  </Spanner>
+```
+
+Add tag to measure AFTER last measure to be highlighted
+```
+<Spanner type="TextLine">
+  <prev>
+    <location>
+      <measures>-1</measures>
+      </location>
+    </prev>
+  </Spanner>
+```
 
 ### Specs for musicXML:
 
