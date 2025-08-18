@@ -23,6 +23,10 @@ then, for each staff pair (`<staff>` and `<staff>-1`):
 (another celery task can export it, or user can do it themselves)
 
 
+### steps for coloring notes / rests in musescore
+
+add tag: `<color r="242" g="102" b="34" a="255"/>`
+
 ### Specs for musicXML:
 
 
