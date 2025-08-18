@@ -232,6 +232,52 @@ def new_merge_musescore_files(f1_path, f2_path, output_path=None):
         diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
 
 
+def _mark_measure_as_different(staff1, i1, staff2, i2):
+    """
+    assume staff1 is old (red) and staff2 is new(green)
+    """
+    assert i1 == i2, f"Something is wrong, measures {i1} and {i2} do not have the same measure number"
+
+
+def _measures_are_unchanged(m1: ET.Element, m2: ET.Element) -> bool:
+    # Compare tags
+    if m1.tag != m2.tag:
+        return False
+    
+    # Compare attributes (ignoring "eid")
+    attrs1 = {k: v for k, v in m1.attrib.items() if k != "eid"}
+    attrs2 = {k: v for k, v in m2.attrib.items() if k != "eid"}
+    if attrs1 != attrs2:
+        return False
+    
+    # Compare text (strip whitespace differences)
+    if (m1.text or '').strip() != (m2.text or '').strip():
+        return False
+    
+    # Compare tail text (optional, depends if you care about formatting)
+    if (m1.tail or '').strip() != (m2.tail or '').strip():
+        return False
+    
+    # Compare number of children
+    children1 = [c for c in m1 if c.tag != "eid"]
+    children2 = [c for c in m2 if c.tag != "eid"]
+    if len(children1) != len(children2):
+        return False
+    
+    # Compare children recursively
+    return all(_measures_are_unchanged(c1, c2) for c1, c2 in zip(children1, children2))
+
+def _make_highlight_start() -> ET.Element:
+    pass
+
+def _make_highlight_end() -> ET.Element:
+    pass
+
+def _highlight_measure(staff1: ET.Element, index: int, numMeasures: int, color: str) -> None:
+    """
+    Highlight measure
+    """
+
 
 def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
     """
@@ -246,7 +292,17 @@ def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
         if m1.tag != "Measure" or m2.tag != "Measure":
             print("Non measure tag encountered -- continuing")
         
-        # GO through both measures and assert that everything (except eids) are the same
+        if _measures_are_unchanged(m1, m2):
+            #set m2 to be a full measure of rest
+            continue
+
+        #if different, highlight measures
+        #TODO: Show diff more creatively
+        #   IDEA: set a flag that shows how much detail (can show just a measure highlight, or individual notes colored)
+
+
+
+                
 
 
 def compute_diff(diff_score: ET.Element):
@@ -259,6 +315,12 @@ if __name__ == "__main__":
     file1_path = "tests\\fixtures\\Test-Score\\Test-Score.mscx"
     file2_path = "tests\\fixtures\\Test-Score-2\\Test-Score-2.mscx"
     output_path = "tests\\sample-output\\Test-Score\\Test-Score.mscx"
+
+    #TODO: Eventually do the parts independantly,
+
+    # file1_path = fixtures_dir / "Test-Score/Excerpts/1_Trombone/1-Trombone.mscx"
+    # file2_path = fixtures_dir / "Test-Score-2/Excerpts/1_Trombone/1-Trombone.mscx"
+    # output_path = Path(__file__).parent / "sample-output/Test-Score/Excerpts/1_Trombone/1-Trombone.mscx"
 
     new_merge_musescore_files(file1_path, file2_path, output_path)
 
