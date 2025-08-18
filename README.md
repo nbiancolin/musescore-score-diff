@@ -54,6 +54,8 @@ Add tag to top ov voice (start of measures to be highlighted):
   </Spanner>
 ```
 
+measures is num measures the line lasts
+
 Add tag to measure AFTER last measure to be highlighted
 ```
 <Spanner type="TextLine">
@@ -64,6 +66,10 @@ Add tag to measure AFTER last measure to be highlighted
     </prev>
   </Spanner>
 ```
+
+NB Note:
+- Maybe, instead of mapping by conductor score, we map by parts -- create a new part with diff score and process it that way
+
 
 ### Specs for musicXML:
 
