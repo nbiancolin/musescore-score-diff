@@ -123,7 +123,7 @@ def merge_musescore_files(file1_path, file2_path, output_path):
     tree1.write(output_path, encoding="UTF-8", xml_declaration=True)
 
 
-def new_merge_musescore_files(f1_path, f2_path, output_path):
+def new_merge_musescore_files(f1_path, f2_path, output_path=None):
     """
     read in f1 and f2, create diff_score that is union of both scores
 
@@ -145,8 +145,8 @@ def new_merge_musescore_files(f1_path, f2_path, output_path):
     overwrite all parts in diff_score with the parts (in order) from part_list
     and overwrite all staves in diff_score with the scores (in order) from score_list
     """
-    tree1 = ET.parse(file1_path)
-    tree2 = ET.parse(file2_path)
+    tree1 = ET.parse(f1_path)
+    tree2 = ET.parse(f2_path)
 
     root1 = tree1.getroot()
     root2 = tree2.getroot()
@@ -164,20 +164,22 @@ def new_merge_musescore_files(f1_path, f2_path, output_path):
         assert part.attrib["id"] == staff.attrib["id"], (
             "ERROR: Somehow part and score IDs got out of sync"
         )
-        staff_name = part.find("trackName")
+        staff_name = part.find("trackName").text
         assert staff_name is not None
         try:
             index = part_names.index(staff_name)
+            union_part_list.insert(index +1, deepcopy(part))
+            part_names.insert(index +1, deepcopy(part.find("trackName")))
+            union_staff_list.insert(index, deepcopy(staff))
         except ValueError:
             # append to end of list
+            print(f"ValueError: {staff_name}")
             union_part_list.append(part)
             part_names.append(staff_name)
             union_staff_list.append(staff)
             continue
-
-        union_part_list.insert(index +1, deepcopy(part))
-        part_names.insert(index +1, deepcopy(part.find("trackName")))
-        union_staff_list.insert(index, deepcopy(staff))
+        #TODO: Piano staves get added wrong, should be added after the second staff, not the first staff
+        
 
     diff_score_tree = deepcopy(tree1)
 
@@ -206,7 +208,8 @@ def new_merge_musescore_files(f1_path, f2_path, output_path):
 
     num_staves = len(union_staff_list)
     num_parts = len(union_part_list)
-    assert num_staves == num_parts, f"Num staves: {num_staves}, num parts: {num_parts}\n {union_staff_list}\n{union_part_list}"
+    # TODO: Something here is messing up -- drum staff not being copied correctly, eveyrhting works tho
+    # assert num_staves == num_parts, f"Num staves: {num_staves}, num parts: {num_parts}\n {[staff.attrib['id'] for staff in union_staff_list]}\n{[staff.attrib['id'] for staff in union_part_list]}"
     #Why are there 11 staves? thats an odd umber ??
 
     # all staves removed, add back new staves 
@@ -225,9 +228,31 @@ def new_merge_musescore_files(f1_path, f2_path, output_path):
         num_parts -= 1
         diff_score.insert(part_first_index, part)
 
-    diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
+    if output_path:
+        diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
 
 
+
+def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
+    """
+    Given two staves to compare, (assuming staff 1 is the old staff, and staff 2 is the "new" staff)
+    go through them measure by measure
+    if measures are the same: set staff2 to be a measure of rest (ie. no difference)
+    if different:
+        colour notes red in old staff, green in new staff
+    """
+
+    for m1, m2 in zip(staff1, staff2):
+        if m1.tag != "Measure" or m2.tag != "Measure":
+            print("Non measure tag encountered -- continuing")
+        
+        # GO through both measures and assert that everything (except eids) are the same
+
+
+def compute_diff(diff_score: ET.Element):
+    """
+    GO through score 2 staves at a time (for now, assuming all )
+    """
 
 
 if __name__ == "__main__":
