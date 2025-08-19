@@ -27,6 +27,8 @@ then, for each staff pair (`<staff>` and `<staff>-1`):
 
 add tag: `<color r="242" g="102" b="34" a="255"/>` to note
 
+If its a rest or a barline, it can be inserted at index 1, notes are different for some reason
+
 ### Steps for highlighting measures:
 
 Add tag to top ov voice (start of measures to be highlighted):

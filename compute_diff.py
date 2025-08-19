@@ -147,13 +147,32 @@ def _measures_are_unchanged(m1: ET.Element, m2: ET.Element) -> bool:
     # Compare children recursively
     return all(_measures_are_unchanged(c1, c2) for c1, c2 in zip(children1, children2))
 
-def _mark_differences_in_measure(measure1: ET.Element, measure2: ET.Element) -> None:
+def _make_color_elem(egb: tuple[int, int, int]) -> ET.Element:
+    return ET.fromstring('<color r="242" g="102" b="34" a="100"/>')
+
+def mark_differences_in_measure(measure1: ET.Element, measure2: ET.Element) -> None:
     """
     Assume measure 1 is old (red) and measure2 is new (green)
     """
 
-    children1 = [c for c in measure1 if c.tag != "eid"]
-    children2 = [c for c in measure2 if c.tag != "eid"]
+    for voice1, voice2 in zip(measure1.findall("voice"), measure2.findall("voice")):
+        children1 = [c for c in voice1 if c.tag != "eid"]
+        children2 = [c for c in voice2 if c.tag != "eid"]
+        
+        for i in range(max(len(children1), len(children2))):
+            c1 = children1[i] if i < len(children1) else None
+            c2 = children2[i] if i < len(children2) else None
+            str1 = ET.tostring(c1) if c1 else ""
+            str2 = ET.tostring(c2) if c2 else ""
+            if str1 != str2:
+                #color elements red and green respetively:
+                if c1:
+                    c1.insert(1, _make_color_elem((1, 0, 0)))
+                if c2:
+                    c2.insert(1, _make_color_elem((1, 1, 1)))
+
+
+
 
 def _make_highlight_start(rgb: tuple[int, int, int], num_measures: int = 1) -> ET.Element:
     spanner = ET.Element("Spanner")
@@ -266,8 +285,7 @@ def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
         #if different, highlight measures
         #TODO: Show diff more creatively
         #   IDEA: set a flag that shows how much detail (can show just a measure highlight, or individual notes colored)
-        _highlight_measure(staff1, i, (255, 0, 0), 1)
-        _highlight_measure(staff2, i, (0, 255, 0), 1)
+        mark_differences_in_measure(m1, m2)
         #eventually, do the hihglight in a big line  
 
 
