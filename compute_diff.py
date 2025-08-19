@@ -147,42 +147,92 @@ def _measures_are_unchanged(m1: ET.Element, m2: ET.Element) -> bool:
     # Compare children recursively
     return all(_measures_are_unchanged(c1, c2) for c1, c2 in zip(children1, children2))
 
-def _make_highlight_start(rgb: tuple[int, int, int], num_measures: int = 1) -> ET.Element:
-    return ET.fromstring(
-        '<Spanner type="TextLine">\n'
-            '<TextLine>\n'
-                # '<eid>icWAADvE7ZE_UNlVmVRZvkP</eid>'
-                '<linkedMain/>\n'
-                '<diagonal>0</diagonal>\n'
-                '<lineWidth>5</lineWidth>\n'
-                f'<color r="{rgb[0]}" g="{rgb[1]}" b="{rgb[2]}" a="100"/>\n'
-                '<Segment>\n'
-                    '<subtype>0</subtype>\n'
-                    '<offset x="0" y="2"/>\n'
-                    '<off2 x="0" y="0"/>\n'
-                    '<minDistance>-999</minDistance>\n'
-                    # '<eid>nblchKlbnaD_7SJXnVEKpAF</eid>'
-                    '</Segment>\n'
-                '</TextLine>\n'
-            '<next>\n'
-                '<location>\n'
-                f'<measures>{num_measures}</measures>\n'
-                '</location>\n'
-                '</next>\n'
-            '</Spanner>\n'
-    )
+def _mark_differences_in_measure(measure1: ET.Element, measure2: ET.Element) -> None:
+    """
+    Assume measure 1 is old (red) and measure2 is new (green)
+    """
 
+    children1 = [c for c in measure1 if c.tag != "eid"]
+    children2 = [c for c in measure2 if c.tag != "eid"]
+
+def _make_highlight_start(rgb: tuple[int, int, int], num_measures: int = 1) -> ET.Element:
+    spanner = ET.Element("Spanner")
+    spanner.attrib["type"] = "TextLine"
+    text_line = ET.SubElement(spanner, "TextLine")
+    linkedMain = ET.SubElement(text_line, "linkedMain")
+    linkedMain.text = ""
+    diagonal = ET.SubElement(text_line, "diagonal")
+    diagonal.text = "0"
+    color = ET.SubElement(text_line, "color")
+    color.attrib["r"] = str(rgb[0])
+    color.attrib["g"] = str(rgb[1])
+    color.attrib["b"] = str(rgb[2])
+    segment = ET.SubElement(text_line, "Segment")
+    subtype = ET.SubElement(segment, "subtype")
+    subtype.text = "0"
+    offset = ET.SubElement(segment, "offset")
+    offset.attrib["x"] = "0"
+    offset.attrib["y"] = "2"
+    off2 = ET.SubElement(segment, "off2")
+    off2.attrib["x"] = "0"
+    off2.attrib["y"] = "0"
+    min_distance = ET.SubElement(segment, "minDistance")
+    min_distance.text="-999"
+
+    next_elem = ET.SubElement(spanner, "next")
+    location = ET.SubElement(next_elem, "location")
+    measures = ET.SubElement(location, "measures")
+    measures.text = str(num_measures)
+
+    return spanner
+
+    # return ET.fromstring(
+    #     '<Spanner type="TextLine">\n'
+    #         '<TextLine>\n'
+    #             # '<eid>icWAADvE7ZE_UNlVmVRZvkP</eid>'
+    #             '<linkedMain/>\n'
+    #             '<diagonal>0</diagonal>\n'
+    #             '<lineWidth>5</lineWidth>\n'
+    #             f'<color r="{rgb[0]}" g="{rgb[1]}" b="{rgb[2]}" a="100"/>\n'
+    #             '<Segment>\n'
+    #                 '<subtype>0</subtype>\n'
+    #                 '<offset x="0" y="2"/>\n'
+    #                 '<off2 x="0" y="0"/>\n'
+    #                 '<minDistance>-999</minDistance>\n'
+    #                 # '<eid>nblchKlbnaD_7SJXnVEKpAF</eid>'
+    #                 '</Segment>\n'
+    #             '</TextLine>\n'
+    #         '<next>\n'
+    #             '<location>\n'
+    #             f'<measures>{num_measures}</measures>\n'
+    #             '</location>\n'
+    #             '</next>\n'
+    #         '</Spanner>\n'
+    # )
+
+#TODO: revisit highlighting eventually, pivot towards
 
 def _make_highlight_end(num_measures: int = 1) -> ET.Element:
-    return ET.fromstring(
-        '<Spanner type="TextLine">\n'
-            '<prev>\n'
-                '<location>\n'
-                f'<measures>-{num_measures}</measures>\n'
-                '</location>\n'
-                '</prev>\n'
-            '</Spanner>\n'
-    )
+
+    spanner = ET.Element("Spanner")
+    spanner.attrib["type"] = "TextLine"
+    prev_elem = ET.SubElement(spanner, "prev")
+    location = ET.SubElement(prev_elem, "location")
+    measures = ET.SubElement(location, "measures")
+    measures.text = f"-{num_measures}"
+
+    return spanner
+
+
+    # return ET.fromstring(
+    #     '<Spanner type="TextLine">\n'
+    #         '<prev>\n'
+    #             '<location>\n'
+    #             f'<measures>-{num_measures}</measures>\n'
+    #             '</location>\n'
+    #             '</prev>\n'
+    #         '</Spanner>\n'
+    # )
 
 def _highlight_measure(staff: ET.Element, index: int, rgb: tuple[int, int, int], num_measures: int = 1) -> None:
     """
