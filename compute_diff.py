@@ -258,6 +258,16 @@ def _make_highlight_start(rgb: tuple[int, int, int], num_measures: int = 1) -> E
 
 #TODO: revisit highlighting eventually, pivot towards
 
+def _make_full_measure_of_rest() -> ET.Element:
+    return ET.fromstring(
+        '<Rest>'
+        '<eid>ZSaiHJORj2B_bq0Nw6nAxdI</eid>'
+        '<linkedMain />'
+        '<durationType>measure</durationType>'
+        '<duration>4/4</duration>'
+       '</Rest>'
+    )
+
 def _make_highlight_end(num_measures: int = 1) -> ET.Element:
 
     spanner = ET.Element("Spanner")
@@ -307,6 +317,12 @@ def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
 
         if _measures_are_unchanged(m1, m2):
             #set m2 to be a full bar of rest
+            #TODO: Bug here, fix it!
+            # for voice in m2.findall("voice"):
+            #     for child in voice:
+            #         if child.tag != "KeySig" or child.tag != "TimeSig":
+            #             voice.remove(child)
+            #     voice.append(_make_full_measure_of_rest())
             continue
 
         #if different, highlight measures
