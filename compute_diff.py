@@ -167,9 +167,9 @@ def mark_differences_in_measure(measure1: ET.Element, measure2: ET.Element) -> N
             if str1 != str2:
                 #color elements red and green respetively:
                 if c1:
-                    c1.insert(1, _make_color_elem((1, 0, 0)))
+                    c1.insert(2, _make_color_elem((1, 0, 0)))
                 if c2:
-                    c2.insert(1, _make_color_elem((1, 1, 1)))
+                    c2.insert(2, _make_color_elem((1, 1, 1)))
 
 
 
