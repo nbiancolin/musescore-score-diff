@@ -72,6 +72,8 @@ Add tag to measure AFTER last measure to be highlighted
 NB Note:
 - Maybe, instead of mapping by conductor score, we map by parts -- create a new part with diff score and process it that way
 
+To hide staff:
+`<cutaway>1</cutaway>`
 
 ### Specs for musicXML:
 
