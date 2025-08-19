@@ -147,8 +147,8 @@ def _measures_are_unchanged(m1: ET.Element, m2: ET.Element) -> bool:
     # Compare children recursively
     return all(_measures_are_unchanged(c1, c2) for c1, c2 in zip(children1, children2))
 
-def _make_color_elem(egb: tuple[int, int, int]) -> ET.Element:
-    return ET.fromstring('<color r="242" g="102" b="34" a="100"/>')
+def _make_color_elem(rgb: tuple[int, int, int]) -> ET.Element:
+    return ET.fromstring(f'<color r="{rgb[0]}" g="{rgb[1]}" b="{rgb[2]}" a="255"/>')
 
 def mark_differences_in_measure(measure1: ET.Element, measure2: ET.Element) -> None:
     """
@@ -160,16 +160,43 @@ def mark_differences_in_measure(measure1: ET.Element, measure2: ET.Element) -> N
         children2 = [c for c in voice2 if c.tag != "eid"]
         
         for i in range(max(len(children1), len(children2))):
-            c1 = children1[i] if i < len(children1) else None
-            c2 = children2[i] if i < len(children2) else None
-            str1 = ET.tostring(c1) if c1 else ""
-            str2 = ET.tostring(c2) if c2 else ""
+            c1 = deepcopy(children1[i]) if i < len(children1) else None
+            c2 = deepcopy(children2[i]) if i < len(children2) else None
+
+            if c1 is not None:
+                for child in c1:
+                    if child.tag == "eid":
+                        c1.remove(child)
+                    if child.tag == "Chord":
+                        for c in child:
+                            if c.tag == "eid":
+                                child.remove(c)
+
+            if c2 is not None:
+                for child in c2:
+                    if child.tag == "eid":
+                        c2.remove(child)
+                    if child.tag == "Chord":
+                        for c in child:
+                            if c.tag == "eid":
+                                child.remove(c)
+                
+
+            str1 = ET.tostring(c1) if c1 is not None else ""
+            str2 = ET.tostring(c2) if c2 is not None else ""
             if str1 != str2:
                 #color elements red and green respetively:
-                if c1:
-                    c1.insert(2, _make_color_elem((1, 0, 0)))
-                if c2:
-                    c2.insert(2, _make_color_elem((1, 1, 1)))
+                if c1 is not None:
+                    #check if elem is a "chord", if so, need to get to note elems inside
+                    if children1[i].tag == "Chord":
+                        for c in children1[i].findall("Note"):
+                            c.insert(2, _make_color_elem((255, 0, 0)))
+                    children1[i].insert(2, _make_color_elem((255, 0, 0)))
+                if c2 is not None:
+                    if children2[i].tag == "Chord":
+                        for c in children2[i].findall("Note"):
+                            c.insert(2, _make_color_elem((0, 255, 0)))
+                    children2[i].insert(2, _make_color_elem((0, 255, 1)))
 
 
 
