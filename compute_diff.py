@@ -9,120 +9,6 @@ from pathlib import Path
 from copy import deepcopy
 
 
-def merge_musescore_files(file1_path, file2_path, output_path):
-    """
-    Merge two MuseScore (MSCX) files into one Score with:
-      - Interleaving of matching staves/parts (file1, then file2 match)
-      - Unmatched staves/parts appended to the end
-      - Sequential IDs after merge
-      - processing_id preserved for mapping
-    """
-    tree1 = ET.parse(file1_path)
-    tree2 = ET.parse(file2_path)
-
-    root1 = tree1.getroot()
-    root2 = tree2.getroot()
-
-    score1 = root1.find("Score")
-    score2 = root2.find("Score")
-    if score1 is None or score2 is None:
-        raise ValueError("Both files must contain a <Score> element.")
-
-    # Find highest existing ID in score1
-    file1_ids = [
-        int(s.get("id"))
-        for s in score1.findall("./Staff")
-        if s.get("id") and s.get("id").isdigit()
-    ]
-    max_id_file1 = max(file1_ids) if file1_ids else 0
-
-    # Build staff ID remapping for score2
-    staff_id_map = {}
-    next_id = max_id_file1 + 1
-    for staff in score2.findall("./Staff"):
-        old_id = staff.get("id")
-        if old_id not in staff_id_map and old_id and old_id.isdigit():
-            staff_id_map[old_id] = str(next_id)
-            next_id += 1
-
-    # Ensure file1 has processing_id
-    for part in score1.findall("./Part"):
-        part.set("processing_id", part.get("id"))
-    for staff in score1.findall("./Staff"):
-        staff.set("processing_id", staff.get("id"))
-
-    # Helper: find parts/staves in score2 by processing_id
-    def get_matching_from_file2(pid):
-        matching_parts = []
-        matching_staves = []
-        for part in score2.findall("./Part"):
-            if part.get("id") == pid:
-                pcopy = deepcopy(part)
-                pcopy.set("id", staff_id_map.get(pid, pid))
-                pcopy.set("processing_id", pid)
-                for st in pcopy.findall("./Staff"):
-                    sid = st.get("id")
-                    if sid in staff_id_map:
-                        st.set("id", staff_id_map[sid])
-                        st.set("processing_id", sid)
-                matching_parts.append(pcopy)
-        for staff in score2.findall("./Staff"):
-            if staff.get("id") == pid:
-                scopy = deepcopy(staff)
-                scopy.set("id", staff_id_map.get(pid, pid))
-                scopy.set("processing_id", pid)
-                matching_staves.append(scopy)
-        return matching_parts, matching_staves
-
-    used_file2_ids = set()
-
-    # Interleave matching
-    i = 0
-    while i < len(score1):
-        elem = score1[i]
-        if elem.tag in ("Part", "Staff"):
-            pid = elem.get("processing_id")
-            if pid:
-                parts2, staves2 = get_matching_from_file2(pid)
-                for p in parts2:
-                    i += 1
-                    score1.insert(i, p)
-                    used_file2_ids.add(p.get("processing_id"))
-                for s in staves2:
-                    i += 1
-                    score1.insert(i, s)
-                    used_file2_ids.add(s.get("processing_id"))
-        i += 1
-
-    # Append unmatched from score2
-    for part in score2.findall("./Part"):
-        if part.get("id") not in used_file2_ids:
-            pcopy = deepcopy(part)
-            pcopy.set("id", staff_id_map.get(part.get("id"), part.get("id")))
-            pcopy.set("processing_id", part.get("id"))
-            for st in pcopy.findall("./Staff"):
-                sid = st.get("id")
-                if sid in staff_id_map:
-                    st.set("id", staff_id_map[sid])
-                    st.set("processing_id", sid)
-            score1.append(pcopy)
-    for staff in score2.findall("./Staff"):
-        if staff.get("id") not in used_file2_ids:
-            scopy = deepcopy(staff)
-            scopy.set("id", staff_id_map.get(staff.get("id"), staff.get("id")))
-            scopy.set("processing_id", staff.get("id"))
-            score1.append(scopy)
-
-    # Renumber IDs in XML order
-    current_id = 1
-    for elem in score1.findall("./Part") + score1.findall("./Staff"):
-        elem.set("id", str(current_id))
-        current_id += 1
-
-    # Save merged file
-    tree1.write(output_path, encoding="UTF-8", xml_declaration=True)
-
-
 def new_merge_musescore_files(f1_path, f2_path, output_path=None):
     """
     read in f1 and f2, create diff_score that is union of both scores
@@ -169,7 +55,7 @@ def new_merge_musescore_files(f1_path, f2_path, output_path=None):
         try:
             index = part_names.index(staff_name)
             union_part_list.insert(index +1, deepcopy(part))
-            part_names.insert(index +1, deepcopy(part.find("trackName")))
+            part_names.insert(index +1, staff_name)
             union_staff_list.insert(index, deepcopy(staff))
         except ValueError:
             # append to end of list
@@ -230,13 +116,7 @@ def new_merge_musescore_files(f1_path, f2_path, output_path=None):
 
     if output_path:
         diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
-
-
-def _mark_measure_as_different(staff1, i1, staff2, i2):
-    """
-    assume staff1 is old (red) and staff2 is new(green)
-    """
-    assert i1 == i2, f"Something is wrong, measures {i1} and {i2} do not have the same measure number"
+    return (diff_score_tree, part_names)
 
 
 def _measures_are_unchanged(m1: ET.Element, m2: ET.Element) -> bool:
@@ -267,16 +147,51 @@ def _measures_are_unchanged(m1: ET.Element, m2: ET.Element) -> bool:
     # Compare children recursively
     return all(_measures_are_unchanged(c1, c2) for c1, c2 in zip(children1, children2))
 
-def _make_highlight_start() -> ET.Element:
-    pass
+def _make_highlight_start(rgb: tuple[int, int, int], num_measures: int = 1) -> ET.Element:
+    return ET.fromstring(
+        '<Spanner type="TextLine">\n'
+            '<TextLine>\n'
+                # '<eid>icWAADvE7ZE_UNlVmVRZvkP</eid>'
+                '<linkedMain/>\n'
+                '<diagonal>0</diagonal>\n'
+                '<lineWidth>5</lineWidth>\n'
+                f'<color r="{rgb[0]}" g="{rgb[1]}" b="{rgb[2]}" a="100"/>\n'
+                '<Segment>\n'
+                    '<subtype>0</subtype>\n'
+                    '<offset x="0" y="2"/>\n'
+                    '<off2 x="0" y="0"/>\n'
+                    '<minDistance>-999</minDistance>\n'
+                    # '<eid>nblchKlbnaD_7SJXnVEKpAF</eid>'
+                    '</Segment>\n'
+                '</TextLine>\n'
+            '<next>\n'
+                '<location>\n'
+                f'<measures>{num_measures}</measures>\n'
+                '</location>\n'
+                '</next>\n'
+            '</Spanner>\n'
+    )
 
-def _make_highlight_end() -> ET.Element:
-    pass
 
-def _highlight_measure(staff1: ET.Element, index: int, numMeasures: int, color: str) -> None:
+def _make_highlight_end(num_measures: int = 1) -> ET.Element:
+    return ET.fromstring(
+        '<Spanner type="TextLine">\n'
+            '<prev>\n'
+                '<location>\n'
+                f'<measures>-{num_measures}</measures>\n'
+                '</location>\n'
+                '</prev>\n'
+            '</Spanner>\n'
+    )
+
+def _highlight_measure(staff: ET.Element, index: int, rgb: tuple[int, int, int], num_measures: int = 1) -> None:
     """
     Highlight measure
     """
+    start = staff[index]
+    end = staff[index + num_measures]
+    start.insert(1, _make_highlight_start(rgb, num_measures))
+    end.insert(1, _make_highlight_end(num_measures))
 
 
 def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
@@ -287,29 +202,46 @@ def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
     if different:
         colour notes red in old staff, green in new staff
     """
-
-    for m1, m2 in zip(staff1, staff2):
+    assert len(staff1) == len(staff2), "ERROR: Both staves don't have the same number of measures!"
+    for i in range(len(staff1) -1):
+        m1 = staff1[i]
+        m2 = staff2[i]
         if m1.tag != "Measure" or m2.tag != "Measure":
             print("Non measure tag encountered -- continuing")
-        
+
         if _measures_are_unchanged(m1, m2):
-            #set m2 to be a full measure of rest
+            #set m2 to be a full bar of rest
             continue
 
         #if different, highlight measures
         #TODO: Show diff more creatively
         #   IDEA: set a flag that shows how much detail (can show just a measure highlight, or individual notes colored)
+        _highlight_measure(staff1, i, (255, 0, 0), 1)
+        _highlight_measure(staff2, i, (0, 255, 0), 1)
+        #eventually, do the hihglight in a big line  
 
 
-
-                
-
-
-def compute_diff(diff_score: ET.Element):
+def compute_diff(diff_score: ET.Element, part_names: list[str]):
     """
     GO through score 2 staves at a time (for now, assuming all )
     """
+    staves = diff_score.findall("Staff")
+    cont = False
+    for i in range(0, len(staves) -1):
+        if cont:
+            cont = False
+            continue
+        staff1 = staves[i]
+        staff2 = staves[i +1]
+        if part_names[i] != part_names[i +1]:
+            print("New score found, continuing and not adding anything")
+            continue
+        compute_diff_single_staff(staff1, staff2)
+        cont = True
 
+
+def export(diff_score_tree, output_path):
+    diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
 
 if __name__ == "__main__":
     file1_path = "tests\\fixtures\\Test-Score\\Test-Score.mscx"
@@ -322,6 +254,10 @@ if __name__ == "__main__":
     # file2_path = fixtures_dir / "Test-Score-2/Excerpts/1_Trombone/1-Trombone.mscx"
     # output_path = Path(__file__).parent / "sample-output/Test-Score/Excerpts/1_Trombone/1-Trombone.mscx"
 
-    new_merge_musescore_files(file1_path, file2_path, output_path)
+    diff_score_tree, part_names = new_merge_musescore_files(file1_path, file2_path)
+    diff_root = diff_score_tree.getroot()
+    diff_score = diff_root.find("Score")
+    compute_diff(diff_score, part_names)
+    export(diff_score_tree, output_path)
 
     print("Musescore files merged!")
