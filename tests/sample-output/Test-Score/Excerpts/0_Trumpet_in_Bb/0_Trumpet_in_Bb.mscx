@@ -306,8 +306,6 @@
         <voice>
           <Rest>
             <eid>2+QL1SNYPiM_mSXf2VN0l1E</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -322,8 +320,6 @@
         <voice>
           <Rest>
             <eid>wW1irF+JmmG_yR5M4zz6O7E</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>

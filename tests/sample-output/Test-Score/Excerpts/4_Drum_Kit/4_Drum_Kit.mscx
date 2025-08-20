@@ -5,6 +5,10 @@
   <Score>
     <eid>Kpi2eocnytG_yROwV40TkSD</eid>
     <name>Drum Kit</name>
+    <Tracklist sTrack="20" dstTrack="0"/>
+    <Tracklist sTrack="21" dstTrack="1"/>
+    <Tracklist sTrack="22" dstTrack="2"/>
+    <Tracklist sTrack="23" dstTrack="3"/>
     <initialPartId>5</initialPartId>
     <Division>480</Division>
     <Style>
@@ -36,175 +40,21 @@
         <defaultClef>PERC</defaultClef>
         </Staff>
       <trackName>Drum Kit</trackName>
-      <Instrument id="drum-kit-5">
-        <longName>Drum Kit</longName>
-        <shortName>D. Kit</shortName>
-        <trackName>Drum Kit (common)</trackName>
-        <instrumentId>drum.group.set</instrumentId>
-        <useDrumset>1</useDrumset>
-        <Drum pitch="35">
-          <head>normal</head>
-          <line>8</line>
-          <voice>1</voice>
-          <name>Bass Drum 2</name>
-          <stem>2</stem>
-          <panelRow>1</panelRow>
-          <panelColumn>0</panelColumn>
-          </Drum>
-        <Drum pitch="36">
-          <head>normal</head>
-          <line>7</line>
-          <voice>1</voice>
-          <name>Bass Drum</name>
-          <stem>2</stem>
-          <shortcut>A</shortcut>
-          <panelRow>0</panelRow>
-          <panelColumn>0</panelColumn>
-          </Drum>
-        <Drum pitch="37">
-          <head>slashed1</head>
-          <line>3</line>
-          <voice>0</voice>
-          <name>Cross-stick</name>
-          <stem>1</stem>
-          <panelRow>1</panelRow>
-          <panelColumn>1</panelColumn>
-          </Drum>
-        <Drum pitch="38">
-          <head>normal</head>
-          <line>3</line>
-          <voice>0</voice>
-          <name>Snare</name>
-          <stem>1</stem>
-          <shortcut>B</shortcut>
-          <panelRow>0</panelRow>
-          <panelColumn>1</panelColumn>
-          </Drum>
-        <Drum pitch="41">
-          <head>normal</head>
-          <line>5</line>
-          <voice>0</voice>
-          <name>Floor Tom</name>
-          <stem>1</stem>
-          <shortcut>H</shortcut>
-          <panelRow>0</panelRow>
-          <panelColumn>7</panelColumn>
-          </Drum>
-        <Drum pitch="42">
-          <head>cross</head>
-          <line>-1</line>
-          <voice>0</voice>
-          <name>Closed Hi-Hat</name>
-          <stem>1</stem>
-          <shortcut>C</shortcut>
-          <panelRow>0</panelRow>
-          <panelColumn>2</panelColumn>
-          </Drum>
-        <Drum pitch="44">
-          <head>cross</head>
-          <line>9</line>
-          <voice>1</voice>
-          <name>Pedal Hi-Hat</name>
-          <stem>2</stem>
-          <panelRow>1</panelRow>
-          <panelColumn>3</panelColumn>
-          </Drum>
-        <Drum pitch="46">
-          <head>xcircle</head>
-          <line>-1</line>
-          <voice>0</voice>
-          <name>Open Hi-Hat</name>
-          <stem>1</stem>
-          <shortcut>D</shortcut>
-          <panelRow>0</panelRow>
-          <panelColumn>3</panelColumn>
-          </Drum>
-        <Drum pitch="47">
-          <head>normal</head>
-          <line>2</line>
-          <voice>0</voice>
-          <name>Low Tom</name>
-          <stem>1</stem>
-          <panelRow>1</panelRow>
-          <panelColumn>6</panelColumn>
-          </Drum>
-        <Drum pitch="49">
-          <head>cross</head>
-          <line>-2</line>
-          <voice>0</voice>
-          <name>Crash Cymbal</name>
-          <stem>1</stem>
-          <shortcut>E</shortcut>
-          <panelRow>0</panelRow>
-          <panelColumn>4</panelColumn>
-          </Drum>
-        <Drum pitch="50">
-          <head>normal</head>
-          <line>1</line>
-          <voice>0</voice>
-          <name>High Tom</name>
-          <stem>1</stem>
-          <shortcut>G</shortcut>
-          <panelRow>0</panelRow>
-          <panelColumn>6</panelColumn>
-          </Drum>
-        <Drum pitch="51">
-          <head>cross</head>
-          <line>0</line>
-          <voice>0</voice>
-          <name>Ride Cymbal</name>
-          <stem>1</stem>
-          <shortcut>F</shortcut>
-          <panelRow>0</panelRow>
-          <panelColumn>5</panelColumn>
-          </Drum>
-        <Drum pitch="52">
-          <head>normal</head>
-          <noteheads>
-            <whole>noteheadHeavyXHat</whole>
-            <half>noteheadHeavyXHat</half>
-            <quarter>noteheadHeavyXHat</quarter>
-            <breve>noteheadHeavyXHat</breve>
-            </noteheads>
-          <line>-3</line>
-          <voice>0</voice>
-          <name>China Cymbal</name>
-          <stem>1</stem>
-          <panelRow>1</panelRow>
-          <panelColumn>7</panelColumn>
-          </Drum>
-        <Drum pitch="53">
-          <head>diamond</head>
-          <line>0</line>
-          <voice>0</voice>
-          <name>Ride Bell</name>
-          <stem>1</stem>
-          <panelRow>1</panelRow>
-          <panelColumn>5</panelColumn>
-          </Drum>
-        <Drum pitch="55">
-          <head>cross</head>
-          <line>-4</line>
-          <voice>0</voice>
-          <name>Splash Cymbal</name>
-          <stem>1</stem>
-          <panelRow>1</panelRow>
-          <panelColumn>2</panelColumn>
-          </Drum>
-        <Drum pitch="57">
-          <head>cross</head>
-          <line>-3</line>
-          <voice>0</voice>
-          <name>Crash Cymbal 2</name>
-          <stem>1</stem>
-          <panelRow>1</panelRow>
-          <panelColumn>4</panelColumn>
-          </Drum>
-        <clef>PERC</clef>
-        <singleNoteDynamics>0</singleNoteDynamics>
+      <Instrument id="piano">
+        <longName>Piano</longName>
+        <shortName>Pno.</shortName>
+        <trackName>Piano</trackName>
+        <minPitchP>21</minPitchP>
+        <maxPitchP>108</maxPitchP>
+        <minPitchA>21</minPitchA>
+        <maxPitchA>108</maxPitchA>
+        <instrumentId>keyboard.piano</instrumentId>
+        <clef staff="2">F</clef>
         <Channel>
-          <controller ctrl="0" value="1"/>
-          <controller ctrl="32" value="0"/>
+          <program value="0"/>
+          <synti>Fluid</synti>
+          </Channel>
+        <Channel name="harmony">
           <program value="0"/>
           <synti>Fluid</synti>
           </Channel>
@@ -274,15 +124,11 @@
             </TimeSig>
           <Chord>
             <eid>m8xEnm+I2mC_RNiBR8s7dyJ</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>6YgQn1eVyeN_EMKU3u6S+GJ</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -312,15 +158,11 @@
             </Chord>
           <Chord>
             <eid>WQXCZXdxxfK_kJwdwMmyEEP</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>x4me6Z8usnB_A55E4UsjqzB</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -355,15 +197,11 @@
         <voice>
           <Chord>
             <eid>j0E6UF5l1dB_MzHQ2vi0wGO</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>v2jJjHC08CC_ycslJ3wsVhN</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -393,15 +231,11 @@
             </Chord>
           <Chord>
             <eid>QDuqByuQ9SH_73Rq6Ras9dK</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>7vLCMAFkxBF_gOAM9pit4TE</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -436,15 +270,11 @@
         <voice>
           <Chord>
             <eid>y9GO9X6+8MF_izXOLtixn0K</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>CKQGseGFZWB_SrTdIWLwCiJ</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -474,15 +304,11 @@
             </Chord>
           <Chord>
             <eid>aeZjTCXxGZ_AvWUYFRYik</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>NztzVI4NCZF_qUhdGg1aeRE</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -519,15 +345,11 @@
             <subtype>mp</subtype>
             <velocity>64</velocity>
             <eid>acjuIg8Y8F_78yPB0CPfAB</eid>
-            <linked>
-              </linked>
             </Dynamic>
           <Spanner type="HairPin">
             <HairPin>
               <subtype>0</subtype>
               <eid>COoX633t3XJ_cyMdXtUtrq</eid>
-              <linked>
-                </linked>
               </HairPin>
             <next>
               <location>
@@ -556,15 +378,11 @@
             </Chord>
           <Chord>
             <eid>BvfJeU8y1SE_7/SIUbqZkgP</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>1irRXn89Q/K_RvzA53wS4XO</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -575,15 +393,11 @@
             </Chord>
           <Chord>
             <eid>aFKhszXFOiB_P2Ue7KYd3/C</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>Jlbn0LeLhrO_Pm8jqim/zpD</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -616,15 +430,11 @@
         <voice>
           <Chord>
             <eid>AjMwXwVTBwE_zfNIR658sDK</eid>
-            <linked>
-              </linked>
             <small>1</small>
             <durationType>quarter</durationType>
             <Spanner type="Slur">
               <Slur>
                 <eid>njdxlNRxm6D_t4I8xjuhHWL</eid>
-                <linked>
-                  </linked>
                 </Slur>
               <next>
                 <location>
@@ -635,8 +445,6 @@
             <StemDirection>up</StemDirection>
             <Note>
               <eid>S9L9lXHNwfP_tO+piTlPQoE</eid>
-              <linked>
-                </linked>
               <pitch>59</pitch>
               <tpc>19</tpc>
               <play>0</play>
@@ -646,15 +454,15 @@
             </Chord>
           <Chord>
             <eid>7RdWjEZX3VB_yxgc2EYxdkH</eid>
-            <linked>
-              </linked>
             <small>1</small>
             <durationType>quarter</durationType>
             <StemDirection>up</StemDirection>
             <Note>
               <eid>lHl9QCOIC5B_JpGi+1WMIED</eid>
-              <linked>
-                </linked>
+              <Accidental>
+                <subtype>accidentalFlat</subtype>
+                <eid>A4uFNT/Efi_6f21OSO34DJ</eid>
+                </Accidental>
               <pitch>63</pitch>
               <tpc>11</tpc>
               <play>0</play>
@@ -664,8 +472,6 @@
             </Chord>
           <Chord>
             <eid>HYzmhx5tFuM_yB4KCBJphoE</eid>
-            <linked>
-              </linked>
             <small>1</small>
             <durationType>half</durationType>
             <Spanner type="Slur">
@@ -678,12 +484,6 @@
             <StemDirection>up</StemDirection>
             <Note>
               <eid>W4sTbrV9XoJ_YbvBrOiUTaK</eid>
-              <linked>
-                </linked>
-              <Accidental>
-                <subtype>accidentalNatural</subtype>
-                <eid>/zrIwjsZMZI_LA7PUxP+egO</eid>
-                </Accidental>
               <pitch>62</pitch>
               <tpc>16</tpc>
               <play>0</play>
@@ -705,15 +505,11 @@
             </Spanner>
           <Chord>
             <eid>e2LKecDdJmI_6nBWlCT8drM</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>00TLTQV82wC_BncKvVQx2fF</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -743,15 +539,11 @@
             </Chord>
           <Chord>
             <eid>k9aN7UCDrMJ_3rgTXLuApNM</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>7I1PYZVGcoJ_TnqBv2K6MIH</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -786,15 +578,11 @@
         <voice>
           <Chord>
             <eid>cSvvbt9z7BL_nV8xfYMtvoB</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>2BK3c7khHgP_2nfo+lu3w5B</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -824,15 +612,11 @@
             </Chord>
           <Chord>
             <eid>+jbohTKc5hB_tgdDtSor+2E</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>HPsiSov4JTI_gas6ZNyyjnK</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -867,15 +651,11 @@
         <voice>
           <Chord>
             <eid>Y4zYqWFLKZL_KOZ2j2/eXAK</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>Bf8DMbhdIoO_LHzdFN0pKJF</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -886,15 +666,11 @@
             </Chord>
           <Chord>
             <eid>fHGEc8kke0G_2Oo8r6xqLtF</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>GV+BWWvn3JJ_CB82eIWezVI</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -905,15 +681,11 @@
             </Chord>
           <Chord>
             <eid>ondXB9v0CjH_Ms6lyW2tt7E</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>KItz7+C5xcN_YRPODYOCtuC</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -948,15 +720,11 @@
         <voice>
           <Chord>
             <eid>KnwKoWIwjqH_I4CPcIaR9EN</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>Lx90/fHNI+O_ccX5qIdRfME</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -967,15 +735,11 @@
             </Chord>
           <Chord>
             <eid>+EXnCyQ944M_J1EmvDI6neK</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>Sc9bC3tnyaB_ZoEl3EuzibC</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -986,15 +750,11 @@
             </Chord>
           <Chord>
             <eid>aY18smev7tH_9xAZaty3qTF</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>A6incie+oWB_prspCJt84XN</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -1005,15 +765,11 @@
             </Chord>
           <Chord>
             <eid>+aahOz+mepI_/vHjCcZXkXH</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>l8AlVOcwdYB_MeOjicOQXGP</eid>
-              <linked>
-                </linked>
               <pitch>0</pitch>
               <tpc>14</tpc>
               <head>slash</head>
@@ -1045,9 +801,6 @@
             </RehearsalMark>
           <Rest>
             <eid>ncemwUO5LX_3+kL76+g0MF</eid>
-            <linked>
-              <indexDiff>1</indexDiff>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -1063,7 +816,6 @@
               <location>
                 <staves>-5</staves>
                 </location>
-              <indexDiff>1</indexDiff>
               </linked>
             <text>A</text>
             </RehearsalMark>
@@ -1080,8 +832,6 @@
         <voice>
           <Rest>
             <eid>9ZI7G38aCfJ_OUzI/waMCqG</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -1092,8 +842,6 @@
         <voice>
           <Rest>
             <eid>MsIHQflkXa_/Oh359E11d</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -1104,8 +852,6 @@
         <voice>
           <Rest>
             <eid>yXQeVpLYgDG_Yr2DiyaArEL</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -1116,8 +862,6 @@
         <voice>
           <Rest>
             <eid>g83NQ/8AknF_ppgCwWj4e/N</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -1128,8 +872,6 @@
         <voice>
           <Rest>
             <eid>uFHlsaS8yKG_wHOGHyps1OK</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -1140,8 +882,6 @@
         <voice>
           <Rest>
             <eid>gsHTAf/cG+G_uBSxt6phL2K</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -1152,8 +892,6 @@
         <voice>
           <Rest>
             <eid>GAhq9uovX3F_oIhiXexF4rM</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>

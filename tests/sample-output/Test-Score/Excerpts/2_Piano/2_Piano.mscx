@@ -26,7 +26,7 @@
     <showMargins>0</showMargins>
     <open>1</open>
     <metaTag name="partName">Piano</metaTag>
-    <Part id="3">
+    <Part id="4">
       <Staff id="1">
         <linkedTo>3</linkedTo>
         <StaffType group="pitched">
@@ -128,20 +128,14 @@
             <root>18</root>
             <name>ma7</name>
             <eid>pDmYtGgREWB_iUoXf98zNlM</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>KVFzXUje5OH_u3bCY6G+wlJ</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>xXI38V6yacE_AmCNqL20N9D</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -152,15 +146,11 @@
             </Chord>
           <Chord>
             <eid>Z9gUIUyxqF_W0AOMBi2LyK</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>BIHekOLrT1I_APnfysH5p4C</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -173,20 +163,14 @@
             <root>21</root>
             <name>mi7</name>
             <eid>HwBMboT/McD_/ySOHN2EUfO</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>APEDYX+MarN_lDA+42Mc5QP</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>JyLHv1aghVJ_qG7AaN0gryM</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -197,15 +181,11 @@
             </Chord>
           <Chord>
             <eid>JmlhwjpUEZ_zH4TSzGxswJ</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>oPrKSn4PKmL_F7iNwnsGUXK</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -223,20 +203,14 @@
             <root>20</root>
             <name>mi9</name>
             <eid>LdyjIG18CqD_IZBNlS78nBJ</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>/738MOI33uE_Y2sJeOzJ5VI</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>bkjFP5O69ZD_behfhpOsq9J</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -247,15 +221,11 @@
             </Chord>
           <Chord>
             <eid>KlTM4nrwVwL_ZuWHogovBcL</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>XZzObQthHZF_S28z7BaGf6I</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -268,20 +238,14 @@
             <root>19</root>
             <name>7</name>
             <eid>cjpCMyeKS6E_j6HlrKkgxxF</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>QlUWD58QZ8_RGG5qtuiB3B</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>oTGn+lC3NeD_urO+GGGbQMK</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -292,15 +256,11 @@
             </Chord>
           <Chord>
             <eid>MQEx1r7kuHM_4cS9zKOY1NE</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>eju62RwvyEG_YOGnXc56mcN</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -318,63 +278,43 @@
             <root>18</root>
             <name>ma7</name>
             <eid>0oJz363iZbH_DypcVW3isHC</eid>
-            <linked>
-              </linked>
             </Harmony>
           <StaffText>
             <eid>qKhPqPbYueD_lX43RcUiZAG</eid>
-            <linked>
-              </linked>
             <text>2 bar fill</text>
             </StaffText>
           <Rest>
             <eid>KgxWL5r/YEH_NgGmJniejiN</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             </Rest>
           <Dynamic>
             <subtype>mp</subtype>
             <velocity>64</velocity>
             <eid>8qpgLUJh4OM_4uKipFyYKzG</eid>
-            <linked>
-              </linked>
             </Dynamic>
           <Chord>
             <eid>Q6BDeJZpb7P_igL1UrkNlqJ</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>Qlp6YqIXIHO_ofzeuNcv4NE</eid>
-              <linked>
-                </linked>
               <pitch>75</pitch>
               <tpc>23</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>hlX2tg/bgTL_3l6Wx5HY2dD</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>NlnMX1BIkpG_sFbbaQr8VoK</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>C0mmnXyCt7L_ZDGc3Z8jH7F</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>9mMYyMQiz2K_r6Ttd166NoD</eid>
-              <linked>
-                </linked>
               <pitch>68</pitch>
               <tpc>22</tpc>
               </Note>
@@ -383,57 +323,39 @@
             <root>21</root>
             <name>mi7</name>
             <eid>g8BJfxHqHxK_TyYwyLwQLsK</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>WokERvnpQ+I_rUkDNLCaLPH</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>56b5OMfLDHH_3pLa3qEofsF</eid>
-              <linked>
-                </linked>
               <pitch>64</pitch>
               <tpc>18</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>bSDiFfz7aeN_AzLAeiDyjxI</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>9ZCMduDLnrD_xaoGcttVqo</eid>
-              <linked>
-                </linked>
               <pitch>61</pitch>
               <tpc>21</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>y/97ezcLyTK_SRaLukz0p1D</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>3I3D9Amq2aE_2+enxRcREmL</eid>
-              <linked>
-                </linked>
               <pitch>59</pitch>
               <tpc>19</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>Xr4ShCe7F6N_UIBqXbHEAqL</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>t8X/YNwKrZB_BWNzO5jNATM</eid>
-              <linked>
-                </linked>
               <pitch>61</pitch>
               <tpc>21</tpc>
               </Note>
@@ -447,13 +369,9 @@
             <root>20</root>
             <name>mi9</name>
             <eid>3CwuGvTn2JD_Bwi3NxMZQdJ</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Tuplet>
             <eid>wCA0/lpwk3M_xghVisHi0dK</eid>
-            <linked>
-              </linked>
             <normalNotes>2</normalNotes>
             <actualNotes>3</actualNotes>
             <baseNote>quarter</baseNote>
@@ -469,34 +387,24 @@
             <durationType>quarter</durationType>
             <Note>
               <eid>sIJt41hDViP_1g16ERiNQOM</eid>
-              <linked>
-                </linked>
               <pitch>64</pitch>
               <tpc>18</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>jszUZmEXOtN_7bszkaOgKnJ</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <Note>
               <eid>wLqvsn/snIE_pbsMRZ4FHAG</eid>
-              <linked>
-                </linked>
               <pitch>73</pitch>
               <tpc>21</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>KgOvGW99UZO_qrwp52muKcB</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <Note>
               <eid>b+ofrnaFo5P_5GR7pjv6SeC</eid>
-              <linked>
-                </linked>
               <pitch>69</pitch>
               <tpc>17</tpc>
               </Note>
@@ -506,31 +414,21 @@
             <root>19</root>
             <name>7</name>
             <eid>c6T0BaxDCzE_ZD6MWa4/qrN</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>P5Qjw95kdMP_Z8q/BdufzOG</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <Note>
               <eid>Xe0sqDL2d3E_7drbOI0mk/D</eid>
-              <linked>
-                </linked>
               <pitch>68</pitch>
               <tpc>22</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>g3ENNTiKldE_OaNY0mGHPYM</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <Note>
               <eid>6b7zXx4xHPH_CvuLV28FVyJ</eid>
-              <linked>
-                </linked>
               <pitch>66</pitch>
               <tpc>20</tpc>
               </Note>
@@ -544,20 +442,14 @@
             <root>18</root>
             <name>ma7</name>
             <eid>4pHCBdIrY8D_HsG3LLAmzGE</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>cD9QdATXSTD_v+hzCy6BKkG</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>/8ThQq78o6C_VltCiHQX2cK</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -568,15 +460,11 @@
             </Chord>
           <Chord>
             <eid>ptBeROROZsI_R9IAsSwXQWK</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>b1ZubrX80GH_LpoNoEpcyqE</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -589,20 +477,14 @@
             <root>21</root>
             <name>mi7</name>
             <eid>mPJ7nScRimP_4cMLOkHotxB</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>pSvuQk/FCSL_fgL8cORuRvK</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>z1JqwDQ8opO_s/BBu4+6M6C</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -613,15 +495,11 @@
             </Chord>
           <Chord>
             <eid>FB6/VKZonPJ_XWoYSRZH7tK</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>KY41Eh3rh6P_Z1xYnIG3nkJ</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -639,18 +517,12 @@
             <root>14</root>
             <name>7</name>
             <eid>mqvZrcVNXEF_algMM8SJ5TL</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>O1ZZGCkpj1N_vXyN+TUrdrF</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>V+yDf4SI1KL_dfIT+2U9HmJ</eid>
-              <linked>
-                </linked>
               <Accidental>
                 <subtype>accidentalNatural</subtype>
                 <eid>fSOVO4QgG8E_DjT5Z5ujLOD</eid>
@@ -661,13 +533,9 @@
             </Chord>
           <Chord>
             <eid>633cAGm3X7F_y+3spmxor2C</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>SypaRkaa4nJ_h3ofwZ44yuM</eid>
-              <linked>
-                </linked>
               <Accidental>
                 <subtype>accidentalNatural</subtype>
                 <eid>ab9eVKzTtZC_YI4R73+IMLP</eid>
@@ -678,13 +546,9 @@
             </Chord>
           <Chord>
             <eid>fzLzVg1/MTK_sBYCLpjmQqO</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>mKz4RgVZJKG_Rb22KgKm+U</eid>
-              <linked>
-                </linked>
               <Accidental>
                 <role>1</role>
                 <subtype>accidentalNatural</subtype>
@@ -696,13 +560,9 @@
             </Chord>
           <Chord>
             <eid>XgYYFMEM6zN_Hp3SaamIjqF</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>1llzVIel/VD_Bk8B1mt0M7J</eid>
-              <linked>
-                </linked>
               <Accidental>
                 <role>1</role>
                 <subtype>accidentalNatural</subtype>
@@ -716,31 +576,21 @@
             <root>19</root>
             <name>7</name>
             <eid>NMF7KZWSfQB_5WCcyjytmZE</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>JgVB124DrmG_0OUKd+Bk6LD</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <Note>
               <eid>Li76wgktspI_cbCghJ2wIzI</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>jgD2IQpuOrH_HKX6xijOLOB</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>2I6/1Q5pJzI_nvtx+vzgA5K</eid>
-              <linked>
-                </linked>
               <Accidental>
                 <subtype>accidentalSharp</subtype>
                 <eid>n5kCcBI+ysL_w7zp+zGtzN</eid>
@@ -751,18 +601,12 @@
             </Chord>
           <Chord>
             <eid>CDQrGHU3l9D_hx36iMZ1SLF</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>dBLgpfV9x9D_Lli6HZ1UG9D</eid>
-              <linked>
-                </linked>
               <Spanner type="Tie">
                 <Tie>
                   <eid>wHjiT4BEHHC_k0Ou3paQImO</eid>
-                  <linked>
-                    </linked>
                   </Tie>
                 <next>
                   <location>
@@ -784,18 +628,12 @@
             <root>18</root>
             <name>maj7</name>
             <eid>mbfOanrBk/L_NUBKDqd5smK</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>UuCDX3Jd5+G_KH1BiClmAcO</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>bWrbzM4vE2L_+V20mHSmm5K</eid>
-              <linked>
-                </linked>
               <Spanner type="Tie">
                 <prev>
                   <location>
@@ -810,39 +648,27 @@
             </Chord>
           <Chord>
             <eid>4aSNZh1HpRB_7lSZJDJQp5</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <Note>
               <eid>aDeAWGth/c_6zb1o1ooUFG</eid>
-              <linked>
-                </linked>
               <pitch>75</pitch>
               <tpc>23</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>Ox/9OKWdfAP_xQA2BKzxcjK</eid>
-            <linked>
-              </linked>
             <durationType>16th</durationType>
             <Note>
               <eid>UYkfI8l6ahC_yP0MokUQIVI</eid>
-              <linked>
-                </linked>
               <pitch>73</pitch>
               <tpc>21</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>6DaUT4cAi0F_xr8c8ACBKHP</eid>
-            <linked>
-              </linked>
             <durationType>16th</durationType>
             <Note>
               <eid>P55k9MD6o4G_a5GN0zo5AtM</eid>
-              <linked>
-                </linked>
               <pitch>69</pitch>
               <tpc>17</tpc>
               </Note>
@@ -851,31 +677,21 @@
             <root>21</root>
             <name>m7</name>
             <eid>QxSWpvmg7cD_N++gfDJgtkC</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>HJckIwEeaRM_8ynodQQK9LL</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>NEZUD6+1DdI_bspxvcCiB5</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>/uy6JXg7OlD_Np6BKEUqGbO</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>LyY9ocYQb2O_7kn8ZF2J/GF</eid>
-              <linked>
-                </linked>
               <pitch>68</pitch>
               <tpc>22</tpc>
               </Note>
@@ -895,13 +711,9 @@
             </Chord>
           <Chord>
             <eid>SpFVgybTAcJ_wJ74hOCHIIJ</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>QPN9PZZb2n_2uZHeSB8cWD</eid>
-              <linked>
-                </linked>
               <pitch>66</pitch>
               <tpc>20</tpc>
               </Note>
@@ -915,32 +727,22 @@
             <root>20</root>
             <name>m9</name>
             <eid>gfvh4JThQJL_n+bxm1SXEbF</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>IkMSJuWYYeK_QC98zp5vvtJ</eid>
-            <linked>
-              </linked>
             <dots>1</dots>
             <durationType>quarter</durationType>
             <Note>
               <eid>GukgzLmdOML_wx0iu+WHeiM</eid>
-              <linked>
-                </linked>
               <pitch>68</pitch>
               <tpc>22</tpc>
               </Note>
             </Chord>
           <Chord>
             <eid>nVkqvLmG3kK_ucvrPMQzXcO</eid>
-            <linked>
-              </linked>
             <durationType>eighth</durationType>
             <Note>
               <eid>VUOFb0NBfAD_3V3H5pf8U8</eid>
-              <linked>
-                </linked>
               <pitch>64</pitch>
               <tpc>18</tpc>
               </Note>
@@ -949,18 +751,12 @@
             <root>19</root>
             <name>7</name>
             <eid>Ip6/WIhzs0J_OPeDMvwxZeD</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>XRYrC6HepPE_suE5eEIBsxC</eid>
-            <linked>
-              </linked>
             <durationType>half</durationType>
             <Note>
               <eid>PHQlRBPFbgO_yUtiBu7VhkH</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               </Note>
@@ -990,23 +786,14 @@
             <root>18</root>
             <name>ma7</name>
             <eid>Ttpq4N3rCrI_HM+VsOuNQ5L</eid>
-            <linked>
-              <indexDiff>1</indexDiff>
-              </linked>
             </Harmony>
           <Chord>
             <eid>K54nlUe+MfN_6TnwXnrAAeB</eid>
-            <linked>
-              <indexDiff>1</indexDiff>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>bYzOF0yClWF_AHxf6r9iKFG</eid>
-              <linked>
-                <indexDiff>1</indexDiff>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1017,15 +804,11 @@
             </Chord>
           <Chord>
             <eid>3glPSCMrvDK_ejApYag19pI</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>Pc1GBQr3fRE_iP40/CgLRaP</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1038,20 +821,14 @@
             <root>21</root>
             <name>mi7</name>
             <eid>swXaNtKZI0G_vLN59NlJDJB</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>tv7f47/cgpO_WEgROE/akZF</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>Mupz3P3zKoP_54oMKlO1o0M</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1062,15 +839,11 @@
             </Chord>
           <Chord>
             <eid>6/+cMxP/vUO_jK5gr2+tqkP</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>e6V6EVAa1RJ_9jCimz+iePJ</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1088,20 +861,14 @@
             <root>20</root>
             <name>mi9</name>
             <eid>fvNzPz8/RQO_3V0Wn08vsJN</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>UMmxIXmb4uK_+5iMMf86NGD</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>SFVW9UEUCSJ_b8IjTZFDGpM</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1112,15 +879,11 @@
             </Chord>
           <Chord>
             <eid>Dsvow4O1F5N_DFYyjQp9l0C</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>hSjAl433MpN_DKIfPxTAnuC</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1133,20 +896,14 @@
             <root>19</root>
             <name>7</name>
             <eid>Ba+xosBC7RG_xafjHay4h3F</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>3IbzfglBXsM_ZfRpwianojO</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>3/Ph3xzy4wO_xVL8PU0N83P</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1157,15 +914,11 @@
             </Chord>
           <Chord>
             <eid>9N8c5Ftcw9F_ZYoHk9GndpD</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>ZgfFPbTucyP_rtt1/Y532cN</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1183,20 +936,14 @@
             <root>18</root>
             <name>ma7</name>
             <eid>m8kcZzj7apM_NyIs9dQRUDO</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>XUJdVY1OAuM_a2Yj2J1ZOyI</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>hMJpVX/y2+P_lCeJJwkuJPF</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1207,15 +954,11 @@
             </Chord>
           <Chord>
             <eid>Dl+GIkl4EFN_VGM942O1kcH</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>nBeCNt5KqrN_4aQ+ZuIM5JM</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1228,20 +971,14 @@
             <root>21</root>
             <name>mi7</name>
             <eid>AF6gl0NKXJP_Nu7IKSeN9jB</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>3rHdiW7WAsK_a7wlTtrWV3K</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>RDRpichAeEM_xggWxLyxjRE</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1278,20 +1015,14 @@
             <root>20</root>
             <name>mi9</name>
             <eid>+bymgut3OYJ_p95jGVHOjAB</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>Bds6FfGeu0N_clGCwXf8/BP</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>yStByV1BqcJ_NXDHW1pbaKK</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1302,15 +1033,11 @@
             </Chord>
           <Chord>
             <eid>NjXuipbTsML_17UkRUAEQAM</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>/7ueq0WWh2N_Jdtpz/gWO8P</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1323,20 +1050,14 @@
             <root>19</root>
             <name>7</name>
             <eid>mEvS9rKSJZP_pM5jJcE2eGJ</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>AUVMm9P9PuK_rWMbIOc/Q+N</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>58gVVTR8o9G_kLtV2W3ULdK</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1347,15 +1068,11 @@
             </Chord>
           <Chord>
             <eid>mFdzDqyMKYO_Kk9eDFmIrOO</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>VIws7J1undD_kfWYGhvfzf</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1373,20 +1090,14 @@
             <root>18</root>
             <name>ma7</name>
             <eid>6LlAOkY416C_kuZCBFePM2F</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>0v+ezziaHwM_aQkBX7JXvnC</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>1tK1OAa1m6_Xw2Mg0amCEH</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1397,15 +1108,11 @@
             </Chord>
           <Chord>
             <eid>phL0XIwkNnN_7DpNamfg8dN</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>xU5X/fuMsfJ_xXVJ9fnLfqF</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1418,20 +1125,14 @@
             <root>21</root>
             <name>mi7</name>
             <eid>6Jiaqi0AchH_oezcgAeCvIK</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>QXv77y/aoUD_OABkycvs7u</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>WmLUTft//B_boaa14HZtKI</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1442,15 +1143,11 @@
             </Chord>
           <Chord>
             <eid>r5FI9j/KqKG_fF05AryI52</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>X6QzmxCUPAD_bv6iexyQxkF</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1468,20 +1165,14 @@
             <root>20</root>
             <name>mi9</name>
             <eid>3ArPEOGyT7H_FHj4ZQf+P8C</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>q02X1ZsN5UE_QfC8OGJG//L</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>E3wdMatvBPO_J8XYcbDyHNN</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1492,15 +1183,11 @@
             </Chord>
           <Chord>
             <eid>MqYALKQGRDD_+L1xoLFigCO</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>VqXFbnxsJJL_Wnhh3oaoxDL</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1513,20 +1200,14 @@
             <root>19</root>
             <name>7</name>
             <eid>2Kuu2s2CmdK_UXNR7T47G/B</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>xiKKJOsBC2G_+orE5MbT1BP</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>HLgpo8Ck7/L_NcA9q9GOU9B</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1537,15 +1218,11 @@
             </Chord>
           <Chord>
             <eid>pRlGM3cWNCL_7ljJi5GZkAF</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>QEaj08NoynC_leDeMFcIPvK</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1563,20 +1240,14 @@
             <root>18</root>
             <name>ma7</name>
             <eid>ooj4Tp/D17I_ylom4LSu1VN</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>0w7wFIEpDy_zwAyH4yXakC</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>X6ehrHzM0rO_kvKl+n8yULF</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1587,15 +1258,11 @@
             </Chord>
           <Chord>
             <eid>qUdf+5M/6AI_OhP9ojZfDoI</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>da3QiGPZbpH_f3ZrVpXFSqC</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1608,20 +1275,14 @@
             <root>21</root>
             <name>mi7</name>
             <eid>e+11G9WRPEJ_2G7Pf6+9keK</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>rEq0B0a7GyL_fKbTMv8QvBI</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>bVW9zS3G7/J_r/uuZ/d63kC</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1632,15 +1293,11 @@
             </Chord>
           <Chord>
             <eid>nxToh/5kX7B_GhUp3gaLg8J</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>a5R3khb4flH_8GRh//ggVCB</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1658,20 +1315,14 @@
             <root>20</root>
             <name>mi9</name>
             <eid>2lI9+WYeMGL_IFsDhBqiddK</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>aCKWUy9B9wM_fBhJNNcHNkJ</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>iendw777ksF_uwufG3RPFbD</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1682,15 +1333,11 @@
             </Chord>
           <Chord>
             <eid>CcPvIwFryOF_i8KdOzVfGVN</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>lPEzDsV/BpH_gs1IluxJk3K</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1703,20 +1350,14 @@
             <root>19</root>
             <name>7</name>
             <eid>VmK9RAfS0DI_RpIL+UBYjfK</eid>
-            <linked>
-              </linked>
             </Harmony>
           <Chord>
             <eid>SY7SMvig28J_q00ntjETIoL</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>c2usyh2ZnlN_dw9JrJ8a6WH</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1727,15 +1368,11 @@
             </Chord>
           <Chord>
             <eid>QMEcGRmtTJD_1vCMpTb2kxL</eid>
-            <linked>
-              </linked>
             <durationType>quarter</durationType>
             <noStem>1</noStem>
             <StemDirection>down</StemDirection>
             <Note>
               <eid>GVh3VUnhgdH_g7sSxkIgDUO</eid>
-              <linked>
-                </linked>
               <pitch>71</pitch>
               <tpc>19</tpc>
               <head>slash</head>
@@ -1954,8 +1591,6 @@
         <voice>
           <Rest>
             <eid>PuEI3DT5exI_Xfm5HCITefL</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
@@ -2048,8 +1683,6 @@
         <voice>
           <Rest>
             <eid>xk0CAx+88JN_FnK1Nmulj3D</eid>
-            <linked>
-              </linked>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
