@@ -190,13 +190,13 @@ def mark_differences_in_measure(measure1: ET.Element, measure2: ET.Element) -> N
                     #check if elem is a "chord", if so, need to get to note elems inside
                     if children1[i].tag == "Chord":
                         for c in children1[i].findall("Note"):
-                            c.insert(2, _make_color_elem((255, 0, 0)))
-                    children1[i].insert(2, _make_color_elem((255, 0, 0)))
+                            c.insert(2, _make_color_elem((200, 0, 0)))
+                    children1[i].insert(2, _make_color_elem((200, 0, 0)))
                 if c2 is not None:
                     if children2[i].tag == "Chord":
                         for c in children2[i].findall("Note"):
-                            c.insert(2, _make_color_elem((0, 255, 0)))
-                    children2[i].insert(2, _make_color_elem((0, 255, 1)))
+                            c.insert(2, _make_color_elem((32, 186, 32)))
+                    children2[i].insert(2, _make_color_elem((32, 186, 32)))
 
 
 
