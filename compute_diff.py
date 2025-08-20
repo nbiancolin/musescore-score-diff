@@ -46,6 +46,9 @@ def new_merge_musescore_files(f1_path, f2_path, output_path=None):
     part_names = [part.find("trackName").text for part in score1.findall("Part")]
     union_staff_list = [staff for staff in score1.findall("Staff")]
 
+    def _make_cutaway() -> ET.Element:
+        return ET.fromstring("<cutaway>1</cutaway>")
+
     for part, staff in zip(score2.findall("Part"), score2.findall("Staff")):
         assert part.attrib["id"] == staff.attrib["id"], (
             "ERROR: Somehow part and score IDs got out of sync"
@@ -54,7 +57,10 @@ def new_merge_musescore_files(f1_path, f2_path, output_path=None):
         assert staff_name is not None
         try:
             index = part_names.index(staff_name)
-            union_part_list.insert(index +1, deepcopy(part))
+            p = deepcopy(part)
+            s = p.find("Staff")
+            s.append(_make_cutaway())
+            union_part_list.insert(index +1, p)
             part_names.insert(index +1, staff_name)
             union_staff_list.insert(index, deepcopy(staff))
         except ValueError:
