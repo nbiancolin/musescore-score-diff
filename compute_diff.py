@@ -386,7 +386,7 @@ def mscz_main(file1_path, file2_path):
         diff_root = diff_score_tree.getroot()
         diff_score = diff_root.find("Score")
         compute_diff(diff_score, part_names)
-        export(diff_score_tree, work_dir)
+        export(diff_score_tree, file1)
         print("Merged a part!")
 
 
