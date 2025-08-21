@@ -8,6 +8,7 @@ from pathlib import Path
 
 from copy import deepcopy
 
+TEMP_DIR = "blob/temp"  # TODO[SC-52]: move to settings.py
 
 def new_merge_musescore_files(f1_path, f2_path, output_path=None):
     """
@@ -360,10 +361,45 @@ def compute_diff(diff_score: ET.Element, part_names: list[str]):
 def export(diff_score_tree, output_path):
     diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
 
+
+def mscz_main(file1_path, file2_path):
+    """
+    Instead of working on the score, work on each indiviual mscx on its own
+    """
+
+    both_mscx_files = []
+
+    for input_path in [file1_path, file2_path]:
+        work_dir = TEMP_DIR + input_path.split("/")[-1]
+        with zipfile.ZipFile(input_path, "r") as zip_ref:
+            # Extract all files to "temp" and collect all .mscx files from the zip structure
+            zip_ref.extractall(work_dir)
+        
+        mscx_files = [
+            os.path.join(work_dir, f) for f in zip_ref.namelist() if f.endswith(".mscx")
+        ]
+        both_mscx_files.append(mscx_files)
+
+    
+    for file1, file2 in zip(both_mscx_files[0], both_mscx_files[1]):
+        diff_score_tree, part_names = new_merge_musescore_files(file1, file2)
+        diff_root = diff_score_tree.getroot()
+        diff_score = diff_root.find("Score")
+        compute_diff(diff_score, part_names)
+        export(diff_score_tree, work_dir)
+        print("Merged a part!")
+
+
 if __name__ == "__main__":
-    file1_path = "tests\\fixtures\\Test-Score\\Test-Score.mscx"
-    file2_path = "tests\\fixtures\\Test-Score-2\\Test-Score-2.mscx"
-    output_path = "tests\\sample-output\\Test-Score\\Test-Score.mscx"
+    # file1_path = "tests\\fixtures\\Test-Score\\Test-Score.mscx"
+    # file2_path = "tests\\fixtures\\Test-Score-2\\Test-Score-2.mscx"
+    # output_path = "tests\\sample-output\\Test-Score\\Test-Score.mscx"
+
+    file1_path = "tests\\fixtures\\Test-Score.mscz"
+    file2_path = "tests\\fixtures\\Test-Score-2.mscz"
+    output_path = "tests\\sample-output\\Test-Score.mscz"
+
+    mscz_main(file1_path, file2_path)
 
     #TODO: Eventually do the parts independantly,
 
@@ -371,10 +407,11 @@ if __name__ == "__main__":
     # file2_path = fixtures_dir / "Test-Score-2/Excerpts/1_Trombone/1-Trombone.mscx"
     # output_path = Path(__file__).parent / "sample-output/Test-Score/Excerpts/1_Trombone/1-Trombone.mscx"
 
-    diff_score_tree, part_names = new_merge_musescore_files(file1_path, file2_path)
-    diff_root = diff_score_tree.getroot()
-    diff_score = diff_root.find("Score")
-    compute_diff(diff_score, part_names)
-    export(diff_score_tree, output_path)
+    # diff_score_tree, part_names = new_merge_musescore_files(file1_path, file2_path)
+    # diff_root = diff_score_tree.getroot()
+    # diff_score = diff_root.find("Score")
+    # compute_diff(diff_score, part_names)
+    # export(diff_score_tree, output_path)
+
 
     print("Musescore files merged!")
