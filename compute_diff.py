@@ -315,8 +315,8 @@ def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
     if different:
         colour notes red in old staff, green in new staff
     """
-    assert len(staff1) == len(staff2), "ERROR: Both staves don't have the same number of measures!"
-    for i in range(len(staff1) -1):
+    # assert len(staff1) == len(staff2), f"ERROR: Both staves don't have the same number of measures! {len(staff1)} vs {len(staff2)}"
+    for i in range(min(len(staff1), len(staff2))):
         m1 = staff1[i]
         m2 = staff2[i]
         if m1.tag != "Measure" or m2.tag != "Measure":
