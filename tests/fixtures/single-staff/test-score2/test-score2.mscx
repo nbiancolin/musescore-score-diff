@@ -11,6 +11,7 @@
     <showMargins>0</showMargins>
     <open>1</open>
     <metaTag name="arranger"></metaTag>
+    <metaTag name="audioComUrl"></metaTag>
     <metaTag name="composer">Composer / arranger</metaTag>
     <metaTag name="copyright"></metaTag>
     <metaTag name="creationDate">2025-09-12</metaTag>
@@ -19,6 +20,7 @@
     <metaTag name="movementTitle"></metaTag>
     <metaTag name="platform">Microsoft Windows</metaTag>
     <metaTag name="source"></metaTag>
+    <metaTag name="sourceRevisionId"></metaTag>
     <metaTag name="subtitle">Subtitle</metaTag>
     <metaTag name="translator"></metaTag>
     <metaTag name="workNumber"></metaTag>
@@ -493,6 +495,37 @@
               <tpc>19</tpc>
               </Note>
             </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>0Q3wV3kMadD_N08mkS20OvB</eid>
+        <voice>
+          <Chord>
+            <eid>884P7Jxm+eN_nN2qdL/O6nD</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>jealfs6v8/E_m3o+pJsaLuB</eid>
+              <pitch>69</pitch>
+              <tpc>17</tpc>
+              </Note>
+            </Chord>
+          <Rest>
+            <eid>1F+NCS+TERD_ckbmx+n9ZeD</eid>
+            <durationType>quarter</durationType>
+            </Rest>
+          <Chord>
+            <eid>Au/ZQh4y3BL_dl076T9RIWG</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>aJzTsPUc9KL_NmQrLcJt3nI</eid>
+              <pitch>71</pitch>
+              <tpc>19</tpc>
+              </Note>
+            </Chord>
+          <Rest>
+            <eid>Hi5+4trXJsI_aqdLHWTGvkB</eid>
+            <durationType>quarter</durationType>
+            </Rest>
           </voice>
         </Measure>
       <Measure>

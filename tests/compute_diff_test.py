@@ -16,8 +16,10 @@ def test_diff_computes_correctly():
     res = compute_diff(file1, file2)
     for k in res:
         if k == 7:
-            assert res[7] == State.MODIFIED, f"Res: {res}"
+            assert res[7] == State.MODIFIED, f"num: {k}, Res: {res}"
+        elif k == 16:
+            assert res[16] == State.INSERTED, f"num: {k}, Res: {res}"
         else:
-            assert res[k] == State.UNCHANGED
+            assert res[k] == State.UNCHANGED, f"num: {k}, Res: {res}"
 
 
