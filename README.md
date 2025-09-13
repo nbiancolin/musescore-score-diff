@@ -6,6 +6,15 @@ Inspired by Greg Chapman and Francesco Fortino's "Music-score-diff" -- specializ
 
 NOTE: Maybe do music xml files ??
 
+# General Flow
+
+Compute Diff of 2 scores (ie. which measures are different) using the same algorithm (backtracing and lfs) that git uses when computing diffs
+
+then, create a new score that has a duplicate copy of each staff from score1 and score 2 (so, a merged score)
+- the second staff (from score2) will be empty if the measure is uncanged, but if the measure isc hanged in any way, the measure from staff1 is turned red, and the measure from staff2 is turned green
+
+== OLD ==
+
 ## General Idea
 Will need both files in memory, hereinafter refered to as "score1" (old version) and "score2" (new version)
 
