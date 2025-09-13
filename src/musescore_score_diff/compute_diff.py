@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-from .utils import extract_measures
+from .utils import get_staves, extract_measures
 from .utils import State
 
 
@@ -46,11 +46,19 @@ def backtrack(L: list[list[int]], measures1, measures2)-> dict[int, State]:
 
     return diffs
 
-def compute_diff(file1: str, file2: str) -> dict[int, State]:
-    measures1, measures2 = extract_measures(file1), extract_measures(file2)
+def compute_diff(file1: str, file2: str) -> dict[int, dict[int, State]]:
 
-    seq1 = [h for (_, h, _) in measures1]
-    seq2 = [h for (_, h, _) in measures2]
+    staves1, staves2 = get_staves(file1), get_staves(file2)
+    assert len(staves1) == len(staves2), "Currently, only supported on files that have the same # of instruments"
+    i = 1
+    res = {}
+    for staff1, staff2 in zip(staves1, staves2):
+        measures1, measures2 = extract_measures(staff1), extract_measures(staff2)
 
-    L = lcs(seq1, seq2)
-    return backtrack(L, measures1, measures2)
+        seq1 = [h for (_, h, _) in measures1]
+        seq2 = [h for (_, h, _) in measures2]
+
+        L = lcs(seq1, seq2)
+        res[i] = backtrack(L, measures1, measures2)
+        i += 1
+    return res

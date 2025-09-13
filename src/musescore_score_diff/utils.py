@@ -8,6 +8,7 @@ class State(Enum):
     INSERTED = 3
     REMOVED = 4
 
+# -- Compare Diff Utils --
 
 def _hash_measure(measure: ET.Element) -> str:
     """
@@ -34,8 +35,7 @@ def _sanitize_measure(measure: ET.Element) -> ET.Element:
         parent.remove(child)
     return measure
 
-def extract_measures(filename: str) -> list[tuple[int, str, ET.Element]]:
-    """Parse uncompressed mcsx and return list of (number, hash, element)."""
+def get_staves(filename: str) -> list[ET.Element]:
     parser = ET.XMLParser()
     tree = ET.parse(filename, parser)
     root = tree.getroot()
@@ -43,8 +43,12 @@ def extract_measures(filename: str) -> list[tuple[int, str, ET.Element]]:
     if score is None:
         raise ValueError("No <Score> tag found in the XML.")
 
-    staff = score.find("Staff")
-    assert staff is not None
+    return score.findall("Staff")
+
+
+def extract_measures(staff: ET.Element) -> list[tuple[int, str, ET.Element]]:
+    """Parse uncompressed mcsx and return list of (number, hash, element)."""
+    
 
     measures = []
     score_measures = staff.findall("Measure")
@@ -55,3 +59,10 @@ def extract_measures(filename: str) -> list[tuple[int, str, ET.Element]]:
         h = _hash_measure(m)
         measures.append((num, h, m))
     return measures
+
+
+# -- Visualize Diff Utils
+
+def _make_cutaway() -> ET.Element:
+    """Create cutaway element (from your existing code)."""
+    return ET.fromstring("<cutaway>1</cutaway>")
