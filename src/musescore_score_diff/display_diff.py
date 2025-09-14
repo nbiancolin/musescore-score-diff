@@ -7,8 +7,123 @@ from copy import deepcopy
 from typing import List, Tuple
 
 # Assuming these are imported from your utils
-from .utils import extract_measures, State
+from .utils import extract_measures, State, _make_cutaway
+from .compute_diff import compute_diff
 
+def new_merge_musescore_files(f1_path, f2_path, output_path=None):
+    """
+    read in f1 and f2, create diff_score that is union of both scores
+
+    make list of all parts in f1
+    and all staves in f1
+        Note that their IDs line up!
+
+    make diff_score a deep_copy of score 1
+
+    then, copy over all parts and scores from staff 2 into diff_score
+    create list union_part_list and union_staff_list
+    when adding a part to the part list:
+        - simultaneously add the staff to the staff list
+        - Need to insert it in the correct position
+            - so, if the staff name exists in the list, name staff "<name>-1"
+            - set all IDs by their position in the list afterwards,
+
+    then, once lists are creatd
+    overwrite all parts in diff_score with the parts (in order) from part_list
+    and overwrite all staves in diff_score with the scores (in order) from score_list
+    """
+    tree1 = ET.parse(f1_path)
+    tree2 = ET.parse(f2_path)
+
+    root1 = tree1.getroot()
+    root2 = tree2.getroot()
+
+    score1 = root1.find("Score")
+    score2 = root2.find("Score")
+    if score1 is None or score2 is None:
+        raise ValueError("Both files must contain a <Score> element.")
+
+    union_part_list = [part for part in score1.findall("Part")]
+    part_names = [part.find("trackName").text for part in score1.findall("Part")]
+    union_staff_list = [staff for staff in score1.findall("Staff")]
+
+    def _make_cutaway() -> ET.Element:
+        return ET.fromstring("<cutaway>1</cutaway>")
+
+    for part, staff in zip(score2.findall("Part"), score2.findall("Staff")):
+        assert part.attrib["id"] == staff.attrib["id"], (
+            "ERROR: Somehow part and score IDs got out of sync"
+        )
+        staff_name = part.find("trackName").text
+        assert staff_name is not None
+        try:
+            index = part_names.index(staff_name)
+            p = deepcopy(part)
+            s = p.find("Staff")
+            s.append(_make_cutaway())
+            union_part_list.insert(index +1, p)
+            part_names.insert(index +1, staff_name)
+            union_staff_list.insert(index, deepcopy(staff))
+        except ValueError:
+            # append to end of list
+            print(f"ValueError: {staff_name}")
+            union_part_list.append(part)
+            part_names.append(staff_name)
+            union_staff_list.append(staff)
+            continue
+        #TODO: Piano staves get added wrong, should be added after the second staff, not the first staff
+        
+
+    diff_score_tree = deepcopy(tree1)
+
+    # remove all parts, and add back all parts from union_part_list (update IDs as they are inserted)
+
+    diff_root = diff_score_tree.getroot()
+    diff_score = diff_root.find("Score")
+
+    list_score = list(diff_score)
+    part_first_index = -1
+    staff_first_index = -1
+    parts_to_delete = []
+    for i in range(len(list_score)):
+        elem = list_score[i]
+        if elem.tag == "Part":
+            if part_first_index == -1:
+                part_first_index = i
+            parts_to_delete.append(elem)
+        if elem.tag == "Staff":
+            if staff_first_index == -1:
+                staff_first_index = i
+            diff_score.remove(elem)
+        
+    assert part_first_index != -1, "Could not find any parts in diff-score..."
+    assert staff_first_index != -1, "Could not find any staves in diff-score..."
+
+    num_staves = len(union_staff_list)
+    num_parts = len(union_part_list)
+    # TODO: Something here is messing up -- drum staff not being copied correctly, eveyrhting works tho
+    # assert num_staves == num_parts, f"Num staves: {num_staves}, num parts: {num_parts}\n {[staff.attrib['id'] for staff in union_staff_list]}\n{[staff.attrib['id'] for staff in union_part_list]}"
+    #Why are there 11 staves? thats an odd umber ??
+
+    # all staves removed, add back new staves 
+    for staff in reversed(union_staff_list):
+        staff.attrib["id"] = f"{num_staves}"
+        num_staves -= 1
+        diff_score.insert(staff_first_index, staff)
+
+    #remove parts:
+    for part in parts_to_delete:
+        diff_score.remove(part)
+
+    
+    for part in reversed(union_part_list):
+        part.attrib["id"] = f"{num_parts}"
+        num_parts -= 1
+        diff_score.insert(part_first_index, part)
+
+    if output_path:
+        diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
+    return (diff_score_tree, part_names)
 
 def merge_musescore_files_for_diff(f1_path: str, f2_path: str) -> Tuple[ET.ElementTree, List[str]]:
     """
@@ -110,47 +225,19 @@ def merge_musescore_files_for_diff(f1_path: str, f2_path: str) -> Tuple[ET.Eleme
 
     return (diff_score_tree, part_names)
 
-def compute_diff_single_staff(staff1: ET.Element, staff2: ET.Element) -> None:
-    """
-    Compare two staves measure by measure and highlight differences.
-    """
-    for i in range(min(len(staff1), len(staff2))):
-        m1 = staff1[i]
-        m2 = staff2[i]
-        if m1.tag != "Measure" or m2.tag != "Measure":
-            continue
 
-        if not _measures_are_unchanged(m1, m2):
-            # Mark differences in both measures
-            mark_differences_in_measure(m1, m2)
-            print(f"Differences found in measure {i + 1}")
+def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
+    """
+    Fn that goes through diff score, iterates over each staff.
+    for each (staff, staff-1) pairing, and applies the selected diff
+    if measure is unchanged, set the measure in staff-1 to be unchanged
+        (NOTE: Potentially both? so it only shows the different measures) (maybe a toggleable option)
+    if measure is modified, highlight staff red, and staff1 green
+    if measure is added, add a measure of rest to staff, and highlight it red, highlight staff1 green
+    if measure removed, add measue of rest to staff1, and highlight it in red, highlight staff red too
 
-def compute_diff_for_score(diff_score: ET.Element, part_names: List[str]) -> None:
+
     """
-    Go through the diff score and compare adjacent staff pairs.
-    """
-    staves = diff_score.findall("Staff")
-    skip_next = False
-    
-    for i in range(len(staves) - 1):
-        if skip_next:
-            skip_next = False
-            continue
-            
-        staff1 = staves[i]
-        staff2 = staves[i + 1]
-        
-        # Check if this is a staff pair (original and "-1" version)
-        if i < len(part_names) - 1:
-            name1 = part_names[i]
-            name2 = part_names[i + 1]
-            
-            if name2 == f"{name1}-1":
-                print(f"Comparing staff pair: {name1} vs {name2}")
-                compute_diff_single_staff(staff1, staff2)
-                skip_next = True
-            else:
-                print(f"Skipping non-paired staff: {name1}")
 
 def compare_musescore_files(file1_path: str, file2_path: str, output_path: str|None = None) -> str:
     """
@@ -172,22 +259,19 @@ def compare_musescore_files(file1_path: str, file2_path: str, output_path: str|N
     print(f"Comparing {file1_path} and {file2_path}")
     
     # Create merged score with both versions
-    diff_score_tree, part_names = merge_musescore_files_for_diff(file1_path, file2_path)
+    diff_score_tree, part_names = new_merge_musescore_files(file1_path, file2_path)
     
     # Get the score element
     diff_root = diff_score_tree.getroot()
     diff_score = diff_root.find("Score")
     
-    # Create temporary directory for staff comparisons
-    temp_dir = os.path.join(TEMP_DIR, "staff_comparisons")
-    os.makedirs(temp_dir, exist_ok=True)
+    diffs = compute_diff(file1_path, file2_path)
+
+    mark_diffs(diff_score, diffs)
     
-    try:
-        # Compute and apply differences
-        compute_diff_for_score(diff_score, part_names, temp_dir)
-    finally:
-        # Clean up temporary directory
-        shutil.rmtree(temp_dir, ignore_errors=True)
+    
+    
+
     
     # Save the diff score
     diff_score_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
@@ -198,11 +282,14 @@ def compare_musescore_files(file1_path: str, file2_path: str, output_path: str|N
 def compare_mscz_files(file1_path: str, file2_path: str, output_path: str|None = None) -> str:
     """
     Compare two .mscz files by extracting and processing their .mscx contents.
+
+    Should only process the main mscx file, no parts
     """
     both_mscx_files = []
 
     # Extract .mscx files from both .mscz files
     for input_path in [file1_path, file2_path]:
+        #TODO: Refactor to use tempfile.temporarydirectory
         work_dir = os.path.join(TEMP_DIR, os.path.basename(input_path))
         os.makedirs(work_dir, exist_ok=True)
         

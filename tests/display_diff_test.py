@@ -1,6 +1,6 @@
 from musescore_score_diff import compare_musescore_files, compare_mscz_files
 
-from musescore_score_diff.display_diff import merge_musescore_files_for_diff
+from musescore_score_diff.display_diff import merge_musescore_files_for_diff, new_merge_musescore_files
 
 import warnings
 import pytest
@@ -16,7 +16,7 @@ def test_mscz_compare_visually():
     warnings.warn("Check the outputted file that output looks correct!")
 
 
-def initial_diff_score_generated_properly():
+def test_initial_diff_score_generated_properly():
     diff_score_tree, _ = merge_musescore_files_for_diff(FILE1_UNCOMPRESSED_PATH, FILE2_UNCOMPRESSED_PATH)
     diff_score_tree.write("tests/fixtures/_sample_output/Test-Score/Test-Score.mscx", encoding="UTF-8", xml_declaration=True)
     warnings.warn("Check the outputted file that output looks correct!")
