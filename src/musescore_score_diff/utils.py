@@ -66,3 +66,19 @@ def extract_measures(staff: ET.Element) -> list[tuple[int, str, ET.Element]]:
 def _make_cutaway() -> ET.Element:
     """Create cutaway element (from your existing code)."""
     return ET.fromstring("<cutaway>1</cutaway>")
+
+def _make_empty_measure() -> ET.Element:
+    measure = ET.Element("Measure")
+    voice = ET.SubElement(measure, "voice")
+    rest = ET.SubElement(voice, "Rest")
+    durationType = ET.SubElement(rest, "durationType")
+    durationType.text = "measure"
+    duration = ET.SubElement(rest, "duration")
+    duration.text = "4/4"
+
+    return measure
+
+    
+
+def highlight_measure(measure: ET.Element, color: tuple[int, int, int]) -> ET.Element:
+    return measure

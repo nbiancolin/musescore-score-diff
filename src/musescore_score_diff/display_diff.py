@@ -7,7 +7,7 @@ from copy import deepcopy
 from typing import List, Tuple
 
 # Assuming these are imported from your utils
-from .utils import extract_measures, State, _make_cutaway
+from .utils import extract_measures, State, _make_cutaway, _make_empty_measure, highlight_measure
 from .compute_diff import compute_diff
 
 def new_merge_musescore_files(f1_path, f2_path, output_path=None):
@@ -225,7 +225,6 @@ def merge_musescore_files_for_diff(f1_path: str, f2_path: str) -> Tuple[ET.Eleme
 
     return (diff_score_tree, part_names)
 
-
 def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
     """
     Fn that goes through diff score, iterates over each staff.
@@ -236,8 +235,50 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
     if measure is added, add a measure of rest to staff, and highlight it red, highlight staff1 green
     if measure removed, add measue of rest to staff1, and highlight it in red, highlight staff red too
 
-
     """
+
+    #process measures in a list so we can modify it, then add them all back afterwards
+    measures1 = list(staff1.findall("Measure"))
+    measures2 = list(staff2.findall("Measure"))
+
+    m1_processed = []
+    m2_processed = []
+    # upper_bound = max(len(measures1), len(measures2))
+    upper_bound = len(measures_to_mark.keys())
+    for i in range(1, upper_bound):
+        #pop from m1 and m2, and add to m1/m2 pocessed
+        m1 = measures1.pop(0)
+        m2 = measures2.pop(0)
+        match measures_to_mark[i]:
+            case State.UNCHANGED:
+                #clear staff2 (remove old measure)
+                m1_processed.append(m1)
+                m2_processed.append(_make_empty_measure())
+            case State.MODIFIED:
+                #highlight staff1 red and staff2 green
+                m1_processed.append(highlight_measure(m1, (100, 0, 0)))
+                m2_processed.append(highlight_measure(m2, (0, 100, 0)))
+                continue
+            case State.INSERTED:
+                #add measure of rest to staff1
+                m1_processed.append(_make_empty_measure())
+                measures1.insert(0, m1)
+                #highlight staff green
+                m2_processed.append(highlight_measure(m2, (0, 100, 0)))
+                continue
+            case State.REMOVED:
+                #add measure of rest to staff2, 
+                m2_processed.append(_make_empty_measure())
+                measures2.insert(0, m2)
+                # highlight staff1 red
+                m1_processed.append(highlight_measure(m1, (100, 0, 0)))
+                continue
+        
+    
+    #remove the old measures set
+    #add in all the new measures
+
+
 
 def compare_musescore_files(file1_path: str, file2_path: str, output_path: str|None = None) -> str:
     """
