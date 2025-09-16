@@ -12,7 +12,7 @@ FILE1_UNCOMPRESSED_PATH = "tests/fixtures/Test-Score/Test-Score.mscx"
 FILE2_UNCOMPRESSED_PATH = "tests/fixtures/Test-Score-2/Test-Score-2.mscx"
 
 def test_mscz_compare_visually():
-    # compare_mscz_files("tests/fixtures/Test-Score.mscz", "tests/fixtures/Test-Score-2.mscz", "tests/fixtures/_sample_output/Test-Score.mscz")
+    compare_mscz_files(FILE1_MSCZ_PATH, FILE2_MSCZ_PATH, "tests/fixtures/_sample_output/Test-Score.mscz")
     warnings.warn("Check the outputted file that output looks correct!")
 
 

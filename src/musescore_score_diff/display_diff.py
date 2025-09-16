@@ -5,6 +5,7 @@ import os
 import shutil
 from copy import deepcopy
 from typing import List, Tuple
+import tempfile
 
 # Assuming these are imported from your utils
 from .utils import extract_measures, State, _make_cutaway, _make_empty_measure, highlight_measure
@@ -51,9 +52,10 @@ def new_merge_musescore_files(f1_path, f2_path, output_path=None):
         return ET.fromstring("<cutaway>1</cutaway>")
 
     for part, staff in zip(score2.findall("Part"), score2.findall("Staff")):
-        assert part.attrib["id"] == staff.attrib["id"], (
-            "ERROR: Somehow part and score IDs got out of sync"
-        )
+        # This assertion check only works for the score, not for parts !!
+        # assert part.attrib["id"] == staff.attrib["id"], (
+        #     f"ERROR: part id {part.attrib["id"]} not matching staff id {staff.attrib["id"]}"
+        # )
         staff_name = part.find("trackName").text
         assert staff_name is not None
         try:
@@ -276,8 +278,29 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
         
     
     #remove the old measures set
+    for m1, m2 in zip(measures1, measures2):
+        staff1.remove(m1)
+        staff2.remove(m2)
+    
     #add in all the new measures
+    for m1, m2 in zip(m1_processed, m2_processed):
+        staff1.append(m1)
+        staff2.append(m2)
 
+def mark_diffs(diff_score, diffs) -> None:
+    """
+    Create staff pairs to be sent to `mark_diffs_in_staff_pair`
+    
+    """
+    staves = diff_score.findall("Staff")
+    i = 0
+    j = 1
+    while i < len(staves):
+        if (i +1) >= len(staves):
+            break
+        mark_diffs_in_staff_pair(staves[i], staves[i +1], diffs[j])
+        i += 2
+        j += 1
 
 
 def compare_musescore_files(file1_path: str, file2_path: str, output_path: str|None = None) -> str:
@@ -309,9 +332,6 @@ def compare_musescore_files(file1_path: str, file2_path: str, output_path: str|N
     diffs = compute_diff(file1_path, file2_path)
 
     mark_diffs(diff_score, diffs)
-    
-    
-    
 
     
     # Save the diff score
@@ -328,41 +348,37 @@ def compare_mscz_files(file1_path: str, file2_path: str, output_path: str|None =
     """
     both_mscx_files = []
 
-    # Extract .mscx files from both .mscz files
-    for input_path in [file1_path, file2_path]:
-        #TODO: Refactor to use tempfile.temporarydirectory
-        work_dir = os.path.join(TEMP_DIR, os.path.basename(input_path))
-        os.makedirs(work_dir, exist_ok=True)
-        
-        with zipfile.ZipFile(input_path, "r") as zip_ref:
-            zip_ref.extractall(work_dir)
-            mscx_files = [
-                os.path.join(work_dir, f) for f in zip_ref.namelist() 
-                if f.endswith(".mscx")
-            ]
-        both_mscx_files.append(mscx_files)
+    with tempfile.TemporaryDirectory() as work_dir: 
+        # Extract .mscx files from both .mscz files
+        for input_path in [file1_path, file2_path]:
+            
+            with zipfile.ZipFile(input_path, "r") as zip_ref:
+                zip_ref.extractall(work_dir)
+                mscx_files = [
+                    os.path.join(work_dir, f) for f in zip_ref.namelist() 
+                    if f.endswith(".mscx")
+                ]
+            both_mscx_files.append(mscx_files)
 
-    # Generate output path if not provided
-    if output_path is None:
-        base_name = os.path.splitext(os.path.basename(file1_path))[0]
-        output_path = f"diff-{base_name}.mscz"
+        # Generate output path if not provided
+        if output_path is None:
+            base_name = os.path.splitext(os.path.basename(file1_path))[0]
+            output_path = f"diff-{base_name}.mscz"
 
-    # Process each .mscx file pair
-    output_files = []
-    for file1, file2 in zip(both_mscx_files[0], both_mscx_files[1]):
-        mscx_output = file1.replace(os.path.basename(file1), f"diff-{os.path.basename(file1)}")
-        compare_musescore_files(file1, file2, mscx_output)
-        output_files.append(mscx_output)
-        print(f"Processed: {os.path.basename(file1)}")
+        # Process each .mscx file pair
+        output_files = []
+        for file1, file2 in zip(both_mscx_files[0], both_mscx_files[1]):
+            mscx_output = file1.replace(os.path.basename(file1), f"diff-{os.path.basename(file1)}")
+            compare_musescore_files(file1, file2, mscx_output)
+            output_files.append(mscx_output)
+            print(f"Processed: {os.path.basename(file1)}")
 
-    # Create output .mscz file
-    with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for output_file in output_files:
-            arcname = os.path.relpath(output_file, os.path.dirname(output_file))
-            zipf.write(output_file, arcname)
+        # Create output .mscz file
+        with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for output_file in output_files:
+                arcname = os.path.relpath(output_file, os.path.dirname(output_file))
+                zipf.write(output_file, arcname)
 
-    # Clean up temporary files
-    shutil.rmtree(TEMP_DIR, ignore_errors=True)
     
     print(f"Diff .mscz file created: {output_path}")
     return output_path
