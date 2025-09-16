@@ -240,6 +240,8 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
     """
 
     #process measures in a list so we can modify it, then add them all back afterwards
+    old_measures1 = list(staff1.findall("Measure"))
+    old_measures2 = list(staff2.findall("Measure"))
     measures1 = list(staff1.findall("Measure"))
     measures2 = list(staff2.findall("Measure"))
 
@@ -278,7 +280,7 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
         
     
     #remove the old measures set
-    for m1, m2 in zip(measures1, measures2):
+    for m1, m2 in zip(old_measures1, old_measures2):
         staff1.remove(m1)
         staff2.remove(m2)
     
