@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 import hashlib
 from enum import Enum
 
+ALPHA_VALUE = 100
+
 class State(Enum):
     UNCHANGED = 1
     MODIFIED = 2
@@ -78,7 +80,87 @@ def _make_empty_measure() -> ET.Element:
 
     return measure
 
-    
+def _make_highlight_begin(rgb: tuple[int, int, int], num_measures:int = 1) -> ET.Element:
+    spanner = ET.Element("Spanner")
+    spanner.attrib["type"] = "TextLine"
+    textLine = ET.SubElement(spanner, "TextLine")
+    color = ET.SubElement(textLine, "color")
+    color.attrib["r"] = f"{rgb[0]}"
+    color.attrib["g"] = f"{rgb[1]}"
+    color.attrib["b"] = f"{rgb[2]}"
+    color.attrib["b"] = f"{ALPHA_VALUE}"
+    diagonal = ET.SubElement(textLine, "diagonal")
+    diagonal.text = "1"
+    lineWidth = ET.SubElement(textLine, "lineWidth")
+    lineWidth.text = "5"
 
-def highlight_measure(measure: ET.Element, color: tuple[int, int, int]) -> ET.Element:
+    segment = ET.SubElement(textLine, "Segment")
+    subtype = ET.SubElement(segment, "subtype")
+    subtype.text = "0"
+    offset = ET.SubElement(segment, "offset")
+    offset.attrib["x"] = "0"
+    offset.attrib["y"] = "2.3"
+    off2 = ET.SubElement(segment, "off2")
+    off2.attrib["x"] = "0"
+    off2.attrib["y"] = "0"
+
+    minDistance = ET.SubElement(segment, "minDistance")
+    minDistance.text = "-999"
+    innerColor = ET.SubElement(segment, "color")
+    innerColor.attrib["r"] = f"{rgb[0]}"
+    innerColor.attrib["g"] = f"{rgb[1]}"
+    innerColor.attrib["b"] = f"{rgb[2]}"
+    innerColor.attrib["a"] = f"{ALPHA_VALUE}"
+
+    nextElem = ET.SubElement(spanner, "next")
+    location = ET.SubElement(nextElem, "location")
+    measures = ET.SubElement(location, "measures")
+    measures.text = f"{num_measures}"
+
+    return spanner
+    
+def _make_highlight_end(num_measures:int = 1):
+    spanner = ET.Element("Spanner")
+    spanner.attrib["type"] = "TextLine"
+    prevElem = ET.SubElement(spanner, "prev")
+    location = ET.SubElement(prevElem, "location")
+    measures = ET.SubElement(location, "measures")
+    measures.text = f"-{num_measures}"
+
+    return spanner
+
+def _make_alt_highlight_end():
+    return ET.fromstring(
+"""
+<Spanner type="TextLine">
+    <prev>
+        <location>
+        <fractions>-1/1</fractions>
+        </location>
+        </prev>
+    </Spanner>
+    <Spanner type="TextLine">
+    <prev>
+        <location>
+        <fractions>-1/1</fractions>
+        </location>
+        </prev>
+    </Spanner>
+"""
+    )
+
+def highlight_measure(color: tuple[int, int, int],  measure: ET.Element, next_measure: ET.Element|None = None) -> ET.Element:
+    voice = measure.find("voice")
+    assert voice is not None
+    if voice[0].tag == "Spanner":
+        voice.insert(1, _make_highlight_end())
+    else:
+        voice.insert(0, _make_highlight_begin(color))
+
+    if next_measure is not None:
+        next_measure.find("voice").insert(0, _make_highlight_end())
+    else:
+        voice.insert(-1, _make_alt_highlight_end())
+           
+
     return measure

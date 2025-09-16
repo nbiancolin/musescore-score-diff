@@ -253,6 +253,9 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
         #pop from m1 and m2, and add to m1/m2 pocessed
         m1 = measures1.pop(0)
         m2 = measures2.pop(0)
+
+        m1_next = measures1[0] if measures1 else None
+        m2_next = measures2[0] if measures2 else None
         match measures_to_mark[i]:
             case State.UNCHANGED:
                 #clear staff2 (remove old measure)
@@ -260,22 +263,22 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
                 m2_processed.append(_make_empty_measure())
             case State.MODIFIED:
                 #highlight staff1 red and staff2 green
-                m1_processed.append(highlight_measure(m1, (100, 0, 0)))
-                m2_processed.append(highlight_measure(m2, (0, 100, 0)))
+                m1_processed.append(highlight_measure((100, 0, 0), m1, m1_next))
+                m2_processed.append(highlight_measure((0, 100, 0), m2, m2_next))
                 continue
             case State.INSERTED:
                 #add measure of rest to staff1
                 m1_processed.append(_make_empty_measure())
                 measures1.insert(0, m1)
                 #highlight staff green
-                m2_processed.append(highlight_measure(m2, (0, 100, 0)))
+                m2_processed.append(highlight_measure((0, 100, 0), m2, m2_next))
                 continue
             case State.REMOVED:
                 #add measure of rest to staff2, 
                 m2_processed.append(_make_empty_measure())
                 measures2.insert(0, m2)
                 # highlight staff1 red
-                m1_processed.append(highlight_measure(m1, (100, 0, 0)))
+                m1_processed.append(highlight_measure((100, 0, 0), m1, m1_next))
                 continue
         
     
