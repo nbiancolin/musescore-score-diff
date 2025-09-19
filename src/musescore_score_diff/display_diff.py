@@ -8,7 +8,7 @@ from typing import List, Tuple
 import tempfile
 
 # Assuming these are imported from your utils
-from .utils import extract_measures, State, _make_cutaway, _make_empty_measure, highlight_measure
+from .utils import extract_measures, State, _make_cutaway, _make_empty_measure, highlight_measure, make_highlight_end_empty_measure
 from .compute_diff import compute_diff
 
 def new_merge_musescore_files(f1_path, f2_path, output_path=None):
@@ -240,15 +240,14 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
     """
 
     #process measures in a list so we can modify it, then add them all back afterwards
-    old_measures1 = list(staff1.findall("Measure"))
-    old_measures2 = list(staff2.findall("Measure"))
     measures1 = list(staff1.findall("Measure"))
     measures2 = list(staff2.findall("Measure"))
 
     m1_processed = []
     m2_processed = []
     # upper_bound = max(len(measures1), len(measures2))
-    upper_bound = len(measures_to_mark.keys())
+    prev_measure_highlighted = False
+    upper_bound = len(measures_to_mark.keys()) +1
     for i in range(1, upper_bound):
         #pop from m1 and m2, and add to m1/m2 pocessed
         m1 = measures1.pop(0)
@@ -260,11 +259,17 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
             case State.UNCHANGED:
                 #clear staff2 (remove old measure)
                 m1_processed.append(m1)
-                m2_processed.append(_make_empty_measure())
+                if prev_measure_highlighted:
+                    m2_processed.append(make_highlight_end_empty_measure())
+                    prev_measure_highlighted = False
+                else:
+                    m2_processed.append(_make_empty_measure())
+                # m2_processed.append(m2)   # <-- For testing
             case State.MODIFIED:
                 #highlight staff1 red and staff2 green
                 m1_processed.append(highlight_measure((200, 0, 0), m1, m1_next))
                 m2_processed.append(highlight_measure((0, 200, 0), m2, m2_next))
+                prev_measure_highlighted = True
                 continue
             case State.INSERTED:
                 #add measure of rest to staff1
@@ -282,12 +287,16 @@ def mark_diffs_in_staff_pair(staff1, staff2, measures_to_mark) -> None:
                 continue
         
     
+    
     #remove the old measures set
-    for m1, m2 in zip(old_measures1, old_measures2):
+    for m1 in staff1.findall("Measure"):
         staff1.remove(m1)
+
+    for m2 in staff2.findall("Measure"):
         staff2.remove(m2)
     
     #add in all the new measures
+    assert len(m1_processed) == len(m2_processed)
     for m1, m2 in zip(m1_processed, m2_processed):
         staff1.append(m1)
         staff2.append(m2)

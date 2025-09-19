@@ -139,15 +139,15 @@ def _make_alt_highlight_end():
         </location>
         </prev>
     </Spanner>
-    <Spanner type="TextLine">
-    <prev>
-        <location>
-        <fractions>-1/1</fractions>
-        </location>
-        </prev>
-    </Spanner>
 """
     )
+
+def make_highlight_end_empty_measure():
+    m = _make_empty_measure()
+    voice = m.find("voice")
+    assert voice is not None
+    voice.insert(0, _make_highlight_end())
+    return m
 
 def highlight_measure(color: tuple[int, int, int],  measure: ET.Element, next_measure: ET.Element|None = None) -> ET.Element:
     voice = measure.find("voice")
